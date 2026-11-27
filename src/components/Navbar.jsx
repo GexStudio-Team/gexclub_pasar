@@ -26,7 +26,7 @@ export function Navbar() {
     <header className="gx-fade fixed inset-x-0 top-4 z-50 flex justify-center px-4" style={{ animationDelay: "100ms" }}>
       <nav
         className={`flex w-full max-w-3xl items-center justify-between gap-4 rounded-full border px-3 py-2 pl-5 backdrop-blur-xl transition-all duration-500 ${
-          scrolled ? "border-white/10 bg-[#0a0a0f]/70 shadow-[0_8px_40px_-12px_rgba(0,0,0,.8)]" : "border-white/[.06] bg-white/[.03]"
+          scrolled ? "border-white/10 bg-[#080A16]/70 shadow-[0_8px_40px_-12px_rgba(0,0,0,.8)]" : "border-white/[.06] bg-white/[.03]"
         }`}
       >
         <Logo />
@@ -48,7 +48,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href="#comunidad"
-            className="group hidden items-center gap-1.5 rounded-full bg-[#2F7BFF] px-4 py-2 text-[13px] font-medium text-white transition hover:bg-[#4a8dff] sm:flex"
+            className="group hidden items-center gap-1.5 rounded-full bg-[#0078FF] px-4 py-2 text-[13px] font-medium text-white transition hover:bg-[#2f9bff] sm:flex"
           >
             Unirse <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
@@ -64,7 +64,7 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="gx-modal absolute top-16 w-[calc(100%-2rem)] max-w-3xl rounded-3xl border border-white/10 bg-[#0a0a0f]/90 p-2 backdrop-blur-xl md:hidden">
+        <div className="gx-modal absolute top-16 w-[calc(100%-2rem)] max-w-3xl rounded-3xl border border-white/10 bg-[#080A16]/90 p-2 backdrop-blur-xl md:hidden">
           {NAV.map(({ id, label }) => (
             <a key={id} href={`#${id}`} onClick={() => setOpen(false)}
               className="flex items-center justify-between rounded-2xl px-4 py-3 text-white/80 hover:bg-white/5">
@@ -72,7 +72,7 @@ export function Navbar() {
             </a>
           ))}
           <a href="#comunidad" onClick={() => setOpen(false)}
-            className="mt-1 flex items-center justify-center gap-2 rounded-2xl bg-[#2F7BFF] px-4 py-3 font-medium text-white">
+            className="mt-1 flex items-center justify-center gap-2 rounded-2xl bg-[#0078FF] px-4 py-3 font-medium text-white">
             Unirse a GexClub
           </a>
         </div>

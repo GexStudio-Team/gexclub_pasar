@@ -20,9 +20,9 @@ Para desarrollar, usa `npm install` y `npm run dev` (http://127.0.0.1:5173/). Pa
 ## Estructura de GexClubV2.jsx (en orden)
 
 1. **Datos editables:** `BRAND`, `LINKS`, `PAST_EDITION` y `NAV`. Cualquier texto que empiece por `[` es un dato pendiente, y el componente `Ph` lo muestra en ámbar con borde discontinuo.
-2. **`GLOBAL_CSS`:** keyframes y clases propias (`gx-word`, `rv`, `spot`, `radar-*`, `giant`) más la fuente Inter + JetBrains Mono. Colores: fondo `#050507`, acento `#2F7BFF` y secundario `#B6FF3B`.
+2. **`GLOBAL_CSS`:** keyframes y clases propias (`gx-word`, `rv`, `spot`, `radar-*`, `giant`) más la fuente Inter + JetBrains Mono. Colores vigentes: fondo `#01020A`, acento `#0078FF`, violeta `#6018F0` y secundario `#9DB8FF` (ADR-004).
 3. **Hooks y primitivas:** `useInView`, `useParallax`, `Reveal`, `SpotCard` (borde de 1px con brillo que sigue al cursor), `GiantWord` (tipografía gigante con parallax) y `Logo` (si la imagen no carga, muestra "GX").
-4. **`NodeSphere`:** canvas 2D nativo con dos esferas geodésicas de nodos (la exterior azul y la interior lima). Reaccionan al cursor y se expanden con el scroll, y la animación se pausa con un IntersectionObserver.
+4. **`NodeSphere`:** canvas 2D nativo con dos esferas geodésicas de nodos (la exterior azul y la interior azul suave). Reaccionan al cursor y se expanden con el scroll, y la animación se pausa con un IntersectionObserver.
 5. **`Navbar`:** píldora flotante con glassmorphism y la sección activa resaltada.
 6. **`Hero`:** titular que aparece palabra por palabra, de desenfocado a nítido.
 7. **`Ecosistema` (01):** texto que se ilumina con el scroll (`ScrollText`) y una cuadrícula tipo bento con los 4 pilares.

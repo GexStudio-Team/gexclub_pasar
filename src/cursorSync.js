@@ -31,16 +31,16 @@ export function initCursorSync() {
     "position:absolute;left:0;top:0;will-change:transform,opacity;opacity:0;transition:opacity .25s ease,transform .12s linear;";
   cursor.innerHTML =
     '<svg width="25" height="25" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 2px 7px rgba(0,0,0,.8))">' +
-    '<path d="M4 2.5 19.5 12l-7 1.2-3.3 6.8L4 2.5Z" fill="#B6FF3B" stroke="#050507" stroke-width="1.3"/></svg>' +
-    '<span style="position:absolute;left:17px;top:17px;white-space:nowrap;background:#0a0a0f;border:1px solid rgba(182,255,59,.55);color:#B6FF3B;font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.12em;padding:4px 8px;border-radius:6px;">AGENTE · TRABAJANDO</span>';
+    '<path d="M4 2.5 19.5 12l-7 1.2-3.3 6.8L4 2.5Z" fill="#9DB8FF" stroke="#01020A" stroke-width="1.3"/></svg>' +
+    '<span style="position:absolute;left:17px;top:17px;white-space:nowrap;background:#080A16;border:1px solid rgba(157,184,255,.55);color:#9DB8FF;font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.12em;padding:4px 8px;border-radius:6px;">AGENTE · TRABAJANDO</span>';
   layer.appendChild(cursor);
   const cursorLabel = cursor.querySelector("span");
 
   const badge = document.createElement("div");
   badge.style.cssText =
-    "position:fixed;left:14px;bottom:14px;background:#0a0a0f;border:1px solid rgba(182,255,59,.38);color:#B6FF3B;font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.12em;padding:6px 10px;border-radius:99px;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .25s ease;";
+    "position:fixed;left:14px;bottom:14px;background:#080A16;border:1px solid rgba(157,184,255,.38);color:#9DB8FF;font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.12em;padding:6px 10px;border-radius:99px;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .25s ease;";
   badge.innerHTML =
-    '<span style="width:7px;height:7px;border-radius:50%;background:#B6FF3B;animation:gx-work-pulse 1.1s infinite"></span><span>AGENTE TRABAJANDO</span>';
+    '<span style="width:7px;height:7px;border-radius:50%;background:#9DB8FF;animation:gx-work-pulse 1.1s infinite"></span><span>AGENTE TRABAJANDO</span>';
   layer.appendChild(badge);
   const badgeLabel = badge.querySelector("span:last-child");
 
@@ -84,7 +84,7 @@ export function initCursorSync() {
   const ripple = (x, y, delay) => {
     setTimeout(() => {
       const ring = document.createElement("div");
-      ring.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:10px;height:10px;margin:-5px 0 0 -5px;border:2px solid #B6FF3B;border-radius:50%;transition:all .45s ease-out;`;
+      ring.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:10px;height:10px;margin:-5px 0 0 -5px;border:2px solid #9DB8FF;border-radius:50%;transition:all .45s ease-out;`;
       layer.appendChild(ring);
       requestAnimationFrame(() => {
         ring.style.width = "44px";

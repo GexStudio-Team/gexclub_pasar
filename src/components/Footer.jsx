@@ -16,6 +16,7 @@ export function Footer() {
             <a key={id} href={`#${id}`} className="text-white/45 transition hover:text-white">{label}</a>
           ))}
           <a href={LINKS.contacto} className="text-white/45 transition hover:text-white">Contacto y alianzas</a>
+          <a href={LINKS.email} className="text-white/45 transition hover:text-white">Correo</a>
           <a href={LINKS.github} target="_blank" rel="noreferrer" className="text-white/45 transition hover:text-white">GitHub</a>
         </div>
       </div>

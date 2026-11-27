@@ -2,7 +2,7 @@
 
 export const BRAND = {
   logoMark: "/brand/gex-mark-dark-square.png",
-  tagline: "Build the future together.",
+  tagline: "Forjamos el futuro construyendo software, videojuegos y comunidad, juntos.",
   motto: "Create. Learn. Collaborate. Excel.",
 };
 
@@ -11,23 +11,25 @@ export const LINKS = {
   instagram: "https://www.instagram.com/joingexclub/",
   github: "https://github.com/GexStudio-Team",
   contacto: "https://gexclub.novatechdevelopment.com/contacto/",
+  email: "mailto:gexstudioteam@gmail.com",
 };
 
-// Primer hackatón (ya finalizado). Los valores "TEMP" son ejemplos autorizados
-// y deben reemplazarse por información real antes de publicar.
+// Edición 01 (ya finalizada). Fecha, horario, sede y formato verificados en el
+// sitio oficial v0.4.0 y en la ficha pública de Luma. Los valores "TEMP" siguen
+// pendientes de confirmación y no deben presentarse como datos reales.
 export const PAST_EDITION = {
   edition: "Edición 01",
   title: "Gex Club Hackathon 2026",
   subtitle: "Crea el Futuro",
   date: "31 de octubre de 2026",
   time: "8:30 a. m. – 6:30 p. m.",
-  location: "[ TEMP: Bogotá, Colombia — confirmar sede ]",
+  location: "Institución Educativa Distrital Castillo de la Alboraya · Barranquilla",
   summary:
-    "[ TEMP: Reto de 10 horas para prototipar experiencias digitales en equipo. Participantes, mentores y jurado acompañaron el proceso desde la idea inicial hasta la demo final. Confirmar redacción real. ]",
+    "Un día para idear y crear soluciones tecnológicas junto a otros jóvenes creadores. Game jam de desarrollo de videojuegos: diseña, programa y publica tu propia experiencia jugable. Primera edición, pensada para jóvenes entre 14 y 18 años.",
   stats: [
-    { value: "[ TEMP: 42 ]", label: "Participantes" },
-    { value: "[ TEMP: 14 ]", label: "Equipos" },
-    { value: "[ TEMP: 21 ]", label: "Proyectos entregados" },
+    { value: "[ TEMP: participantes ]", label: "Participantes" },
+    { value: "[ TEMP: equipos ]", label: "Equipos" },
+    { value: "[ TEMP: proyectos ]", label: "Proyectos entregados" },
     { value: "10 h", label: "De construcción" },
   ],
   winners: [
@@ -36,17 +38,17 @@ export const PAST_EDITION = {
     { place: "3.er lugar", team: "[ TEMP: Equipo C ]", project: "[ TEMP: Proyecto C ]" },
   ],
   highlights: [
-    "[ TEMP: Logro destacado 1 — confirmar ]",
-    "[ TEMP: Logro destacado 2 — confirmar ]",
-    "[ TEMP: Logro destacado 3 — confirmar ]",
+    "Primer encuentro de Gex Club: las primeras ideas salieron de aquí.",
+    "Talleres, mentorías y proyectos reales.",
+    "Formato: game jam de desarrollo de videojuegos.",
   ],
-  partners: "[ TEMP: mentores, jurado y aliados — confirmar ]",
+  partners: "GexStudio (organización) · Institución Educativa Distrital Castillo de la Alboraya (sede)",
   photos: [
     "[ TEMP: foto 1 — ruta o URL ]",
     "[ TEMP: foto 2 — ruta o URL ]",
     "[ TEMP: foto 3 — ruta o URL ]",
   ],
-  note: "[ DATOS PROVISIONALES: reemplazar por información real antes de publicar ]",
+  note: "[ DATOS REALES: fecha, horario, sede y formato tomados del sitio oficial y de Luma. Cifras, ganadores, jurado y fotos siguen pendientes. ]",
 };
 
 export const NAV = [

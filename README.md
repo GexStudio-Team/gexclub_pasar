@@ -67,14 +67,28 @@ El build separa las dependencias en chunks (`three`, `react`, `icons`) y deja el
 
 ## Datos editables
 
-Los datos de la Edición 01 están en `src/data.js`. Los valores que empiezan con `[` se resaltan en ámbar. En este momento son **ejemplos marcados como `TEMP`**, autorizados provisionalmente; deben reemplazarse por información real antes de publicar.
+Los datos de la Edición 01 están en `src/data.js`. Los valores que empiezan con `[` se resaltan en ámbar. La fecha, el horario, la sede, el formato y el resumen ya son reales: se tomaron del sitio v0.4.0 y de la ficha pública de Luma. Siguen marcados como `TEMP` las cifras, los ganadores y las fotos, porque el sitio oficial no los publica.
 
 Pendiente de datos reales:
 
-- Sede, resumen, cifras, ganadores, logros, aliados y tres fotos de la Edición 01.
-- Enlace de invitación a Discord.
+- Cifras de participantes, equipos y proyectos entregados.
+- Ganadores, jurado y tres fotos de la Edición 01.
+- Enlace de invitación a Discord: no existe en el sitio v0.4.0 ni en sus chunks JS.
 
 El logo oficial se sirve desde `public/brand/gex-mark-dark-square.png`.
+
+## Paleta
+
+La paleta se derivó del PNG oficial, no del sitio anterior:
+
+| Uso | Color |
+| --- | --- |
+| Acento principal | `#0078FF` |
+| Violeta de degradados | `#6018F0` |
+| Texto e iconos secundarios | `#9DB8FF` |
+| Fondo | `#01020A` |
+
+Ya no se usa el verde lima `#B6FF3B`. La decisión y las fuentes están en `docs/ADR-004-paleta-y-datos-reales.md`. El informe del repositorio de skills evaluado (sin descargar) está en `docs/Informe-skills-agentes.md`.
 
 ## Alerta por correo
 

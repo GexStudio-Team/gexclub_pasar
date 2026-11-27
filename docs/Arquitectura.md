@@ -79,7 +79,7 @@ graph TD
 
 | Módulo | Responsabilidad |
 | --- | --- |
-| `data.js` | `BRAND`, `LINKS`, `PAST_EDITION` y `NAV`. Único lugar para datos editables; hoy incluye valores `TEMP` y `photos`. |
+| `data.js` | `BRAND`, `LINKS`, `PAST_EDITION` y `NAV`. Único lugar para datos editables; fecha, horario, sede y formato son reales, mientras cifras, ganadores y fotos siguen como `TEMP` (ADR-004). |
 | `hooks.js` | `useInView` y `useParallax`. |
 | `Primitives.jsx` | `Ph`, `Reveal`, `SpotCard`, `Eyebrow`, `GiantWord`, `Logo` e iconos SVG locales. |
 | `NodeSphere.jsx` | Esfera geodésica en Canvas 2D con dos capas y reacción al cursor/scroll. |
@@ -89,6 +89,8 @@ graph TD
 | `Footer.jsx` | Navegación secundaria y pie. |
 
 La línea de tiempo de “La forja” inserta el tramo del logo en `q = 0.22` con anchura `W = 0.3`, de modo que el progreso total es `1,3` y la pista mide `830vh`. Durante la pausa del emblema, la deformación de vértices se actualiza a 30 Hz mientras el render y la cámara permanecen a 60 fps. El detalle y la justificación están en `docs/ADR-003-logo-liquido.md`.
+
+La paleta canonical se deriva del PNG oficial del logo: acento `#0078FF`, violeta `#6018F0`, secundario `#9DB8FF` y fondo `#01020A`. Está definida en `src/index.css` y `tailwind.config.js`; el verde lima anterior fue eliminado. El detalle está en `docs/ADR-004-paleta-y-datos-reales.md`. El informe del repositorio de skills evaluado, sin descargar, está en `docs/Informe-skills-agentes.md`.
 
 ## Flujo de datos
 

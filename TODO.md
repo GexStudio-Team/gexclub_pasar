@@ -23,25 +23,31 @@ Estado de la web v2 de GexClub.
 - [x] Inicializar Git en `GexClub-v2` y configurar `origin` a `gexclub_pasar` (commit local `6d641b7`).
 - [x] Mostrar el cursor del agente solo cuando ocurre un cambio real, avisado por el watcher de Vite (`src/cursorSync.js` y el plugin `gx-agent-work-cursor`). Sin movimiento animado en reposo y sin referencias en el build de producción.
 - [x] Portar el tramo de metal líquido → logo de GexClub a `src/components/LiquidForge.jsx`, con módulos npm de Three.js, cámara dedicada y deformación limitada a 30 Hz durante la pausa (ADR-003).
+- [x] Alinear la paleta con el PNG oficial: `#0078FF`, `#6018F0`, `#9DB8FF` y fondo `#01020A`; eliminar el verde lima de CSS, Tailwind, Canvas 2D y Three.js (ADR-004).
+- [x] Cargar datos reales del sitio v0.4.0 y Luma: fecha, horario, sede, formato, resumen y correo de contacto (ADR-004).
+- [x] Investigar `mattpocock/skills` y dejar el informe en `docs/Informe-skills-agentes.md` sin descargarlo ni instalarlo.
 
 ## En progreso
 
-- [ ] Ninguna tarea activa en este momento.
+- [ ] Registro de Discord con `gexstudioteam@gmail.com`: formulario abierto, pero detenido a la espera de la fecha de nacimiento y del código de verificación. Gmail aparece sin sesión iniciada.
 
 ## Pendientes
 
 ### Datos reales
 
-El usuario confirmó que los datos reales aún no están listos. Los valores `TEMP` actuales son ejemplos autorizados, no información real. Reemplazar antes de publicar:
+El sitio v0.4.0 no publica resultados de la edición. Reemplazar antes de publicar lo que sigue marcado como `TEMP`:
 
-- [ ] `PAST_EDITION.location` con sede y ciudad reales.
-- [ ] `PAST_EDITION.summary` con resumen real de impacto.
+- [x] `PAST_EDITION.location` con sede y ciudad reales (Luma: Castillo de la Alboraya, Barranquilla).
+- [x] `PAST_EDITION.summary` con resumen real de impacto (copies oficiales de sitio y Luma).
+- [x] `PAST_EDITION.partners` con organizador y sede reales.
 - [ ] Cifras reales de `PAST_EDITION.stats`.
 - [ ] Ganadores reales de `PAST_EDITION.winners`.
-- [ ] Logros reales de `PAST_EDITION.highlights`.
-- [ ] Mentores, jurado y aliados reales en `PAST_EDITION.partners`.
 - [ ] Tres fotos reales en `PAST_EDITION.photos`.
 - [ ] `LINKS.discord` con la invitación real.
+
+### Agentes y skills
+
+- [ ] Decidir si se indexa `mattpocock/skills` tras revisar `docs/Informe-skills-agentes.md`. No se ha descargado nada.
 
 ### Configuración
 

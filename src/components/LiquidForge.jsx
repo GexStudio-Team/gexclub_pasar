@@ -62,15 +62,15 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
   scene.environment = envTex;
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
 
-  const blue = new THREE.PointLight(0x2f7bff, 3.2, 16); blue.position.set(-3.5, 2.2, -2.5); scene.add(blue);
-  const lime = new THREE.PointLight(0xb6ff3b, 1.8, 14); lime.position.set(3.5, 1.2, -3); scene.add(lime);
+  const blue = new THREE.PointLight(0x0078ff, 3.2, 16); blue.position.set(-3.5, 2.2, -2.5); scene.add(blue);
+  const violet = new THREE.PointLight(0x6018f0, 1.8, 14); violet.position.set(3.5, 1.2, -3); scene.add(violet);
   const keyL = new THREE.DirectionalLight(0xffffff, 0.6); keyL.position.set(2, 6, 4); scene.add(keyL);
 
   // Reflejo / halo en el suelo
   const glowTex = (() => {
     const c = document.createElement("canvas"); c.width = c.height = 256; const g = c.getContext("2d");
     const r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    r.addColorStop(0, "rgba(47,123,255,0.55)"); r.addColorStop(0.45, "rgba(47,123,255,0.12)"); r.addColorStop(1, "rgba(47,123,255,0)");
+    r.addColorStop(0, "rgba(0,120,255,0.55)"); r.addColorStop(0.45, "rgba(0,120,255,0.12)"); r.addColorStop(1, "rgba(0,120,255,0)");
     g.fillStyle = r; g.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c);
   })();
   const halo = new THREE.Mesh(new THREE.PlaneGeometry(7, 7), new THREE.MeshBasicMaterial({ map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
@@ -183,7 +183,7 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
   const lDelay = new Float32Array(LN);
   for (let i = 0; i < LN; i++) lDelay[i] = clamp(Math.hypot(lBase[i * 3], lBase[i * 3 + 1]) / 1.2);
   const logoMat = liquid.clone();
-  const C_DARK = new THREE.Color(0x020203), C_BRAND = new THREE.Color(0x1638c9);
+  const C_DARK = new THREE.Color(0x020203), C_BRAND = new THREE.Color(0x0078ff);
   const logo = new THREE.Mesh(logoGeo, logoMat); logo.frustumCulled = false; logo.visible = false; scene.add(logo);
 
   function updateLogo(k, hold, time) {
@@ -222,13 +222,13 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
   const M = {
     shell: new THREE.MeshPhysicalMaterial({ color: 0x07080b, metalness: 0.25, roughness: 0.32, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 0.85 }),
     rubber: new THREE.MeshStandardMaterial({ color: 0x15161b, roughness: 0.8, envMapIntensity: 0.5 }),
-    pcb: new THREE.MeshStandardMaterial({ color: 0x0a1f52, emissive: 0x2f7bff, emissiveIntensity: 0.25, roughness: 0.5 }),
+    pcb: new THREE.MeshStandardMaterial({ color: 0x0a1f52, emissive: 0x0078ff, emissiveIntensity: 0.25, roughness: 0.5 }),
     chip: new THREE.MeshStandardMaterial({ color: 0x0c0c0e, metalness: 0.4, roughness: 0.4 }),
     metal: new THREE.MeshStandardMaterial({ color: 0xbfc4cc, metalness: 1, roughness: 0.2 }),
-    blue: new THREE.MeshStandardMaterial({ color: 0x2f7bff, emissive: 0x2f7bff, emissiveIntensity: 0.2, roughness: 0.3 }),
-    lime: new THREE.MeshStandardMaterial({ color: 0xb6ff3b, emissive: 0xb6ff3b, emissiveIntensity: 0.15, roughness: 0.3 }),
+    blue: new THREE.MeshStandardMaterial({ color: 0x0078ff, emissive: 0x0078ff, emissiveIntensity: 0.2, roughness: 0.3 }),
+    violet: new THREE.MeshStandardMaterial({ color: 0x6018f0, emissive: 0x6018f0, emissiveIntensity: 0.15, roughness: 0.3 }),
     white: new THREE.MeshStandardMaterial({ color: 0xf2f2f2, roughness: 0.35 }),
-    bar: new THREE.MeshStandardMaterial({ color: 0x2f7bff, emissive: 0x2f7bff, emissiveIntensity: 0, roughness: 0.2 }),
+    bar: new THREE.MeshStandardMaterial({ color: 0x0078ff, emissive: 0x0078ff, emissiveIntensity: 0, roughness: 0.2 }),
   };
   const pad = new THREE.Group(); scene.add(pad);
   const parts = [], CENTER = new THREE.Vector3(0, 0.2, 0);
@@ -264,10 +264,10 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
   part(RB(0.4, 0.07, 0.12, 0.025), M.rubber, [-0.8, 0.18, -0.08], [0, 0, 0], 0.77, 0.06);
   part(RB(0.12, 0.07, 0.4, 0.025), M.rubber, [-0.8, 0.18, -0.08], [0, 0, 0], 0.772, 0.06);
   // botones de acción
-  for (const [dx, dz, mat] of [[0, -0.17, M.blue], [0.17, 0, M.lime], [0, 0.17, M.white], [-0.17, 0, M.blue]])
+  for (const [dx, dz, mat] of [[0, -0.17, M.blue], [0.17, 0, M.violet], [0, 0.17, M.white], [-0.17, 0, M.blue]])
     part(SP(0.075), mat, [0.8 + dx, 0.17, -0.08 + dz], [0, 0, 0], 0.775 + rnd() * 0.015, 0.06, [1, 0.55, 1]);
   // joysticks
-  for (const [x, ring] of [[-0.38, M.blue], [0.38, M.lime]]) {
+  for (const [x, ring] of [[-0.38, M.blue], [0.38, M.violet]]) {
     part(CY(0.2, 0.22, 0.06), M.rubber, [x, 0.17, 0.27], [0, 0, 0], 0.785, 0.06);
     part(CY(0.06, 0.06, 0.16, 16), M.rubber, [x, 0.25, 0.27], [0, 0, 0], 0.79, 0.06);
     part(CY(0.16, 0.15, 0.06), M.rubber, [x, 0.34, 0.27], [0, 0, 0], 0.795, 0.06);
@@ -293,7 +293,7 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
     const glow = smooth(clamp((p - 0.84) / 0.06));
     M.bar.emissiveIntensity = glow * 2.6;
     M.blue.emissiveIntensity = 0.2 + glow * 0.9;
-    M.lime.emissiveIntensity = 0.15 + glow * 0.8;
+    M.violet.emissiveIntensity = 0.15 + glow * 0.8;
     const fin = smooth(clamp((p - 0.82) / 0.16));
     pad.position.y = 1.0;
     pad.rotation.set(fin * 0.38, -0.25 + Math.sin(time * 0.5) * 0.1 * fin, Math.sin(time * 0.7) * 0.04 * fin);
@@ -391,7 +391,7 @@ export function LiquidForge() {
   const [, title, desc] = FORGE_STAGES[stageIdx];
   return (
     <section id="forja" ref={trackRef} className="relative" style={{ height: "830vh" }} aria-label="De una idea a tu primer juego">
-      <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(120%_90%_at_62%_45%,#0b1226_0%,#050507_60%)]">
+      <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(120%_90%_at_62%_45%,#071230_0%,#01020A_60%)]">
         <canvas ref={canvasRef} aria-hidden className="absolute inset-0 h-full w-full" />
         {status !== "ready" && (
           <div className="mono absolute inset-0 grid place-items-center text-[11px] uppercase tracking-[.3em] text-white/35">
@@ -403,7 +403,7 @@ export function LiquidForge() {
           <Eyebrow index="02">La forja</Eyebrow>
           <h2 className="mt-6 text-[11vw] font-extrabold uppercase leading-[.88] tracking-[-.045em] text-white md:text-[clamp(44px,6.2vw,96px)]">
             De una idea<br />líquida a tu<br />
-            <span className="bg-gradient-to-r from-[#2F7BFF] to-[#B6FF3B] bg-clip-text text-transparent">primer juego.</span>
+            <span className="bg-gradient-to-r from-[#0078FF] to-[#6018F0] bg-clip-text text-transparent">primer juego.</span>
           </h2>
           <p className="mt-6 hidden max-w-[34ch] text-[15px] leading-relaxed text-white/55 md:block">
             Haz scroll y mira cómo una idea sin forma se convierte en algo que puedes sostener en tus manos.
@@ -412,7 +412,7 @@ export function LiquidForge() {
 
         <div className="absolute bottom-[max(36px,6vh)] left-6 z-10 w-[min(360px,80vw)] sm:left-[5vw]" aria-live="polite">
           <div className="mono flex items-baseline gap-3 text-[11px] uppercase tracking-[.18em] text-white/35">
-            <b className="font-medium text-[#B6FF3B]">{String(stageIdx + 1).padStart(2, "0")}</b>
+            <b className="font-medium text-[#9DB8FF]">{String(stageIdx + 1).padStart(2, "0")}</b>
             <span>/ {String(FORGE_STAGES.length).padStart(2, "0")}</span><span>Fase</span>
           </div>
           <div key={stageIdx} className="gx-fade" style={{ animationDuration: ".5s" }}>
@@ -424,7 +424,7 @@ export function LiquidForge() {
         <div className="mono absolute right-[max(24px,3vw)] top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 text-[10px] tracking-[.15em] text-white/35 md:flex" aria-hidden>
           <span ref={pctRef}>00</span>
           <div className="relative h-[28vh] w-px overflow-hidden bg-white/10">
-            <i ref={barRef} className="absolute inset-0 origin-top bg-[#2F7BFF]" style={{ transform: "scaleY(0)" }} />
+            <i ref={barRef} className="absolute inset-0 origin-top bg-[#0078FF]" style={{ transform: "scaleY(0)" }} />
           </div>
           <span>100</span>
         </div>

@@ -20,14 +20,14 @@ export function Comunidad() {
   return (
     <section id="comunidad" className="relative overflow-hidden px-6 pb-24 pt-16 sm:pb-32">
       <GiantWord text="CREATE" speed={0.2} fill className="-mb-[8vw]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2F7BFF]/[.07] blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0078FF]/[.07] blur-[120px]" />
 
       <div className="relative mx-auto max-w-4xl text-center">
         <Reveal><div className="flex justify-center"><Eyebrow index="04">Comunidad</Eyebrow></div></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-8 text-5xl font-extrabold leading-[.95] tracking-[-.05em] text-white sm:text-7xl">
             Tu próximo proyecto<br />
-            <span className="bg-gradient-to-r from-[#2F7BFF] to-[#B6FF3B] bg-clip-text text-transparent">empieza en comunidad.</span>
+            <span className="bg-gradient-to-r from-[#0078FF] to-[#6018F0] bg-clip-text text-transparent">empieza en comunidad.</span>
           </h2>
         </Reveal>
         <Reveal delay={160}>
@@ -48,9 +48,9 @@ export function Comunidad() {
                   aria-disabled={pending || undefined}
                   className={`block h-full ${pending ? "cursor-not-allowed" : ""}`}
                 >
-                  <SpotCard className={`group flex h-full items-center justify-between gap-4 p-5 ${primary ? "border-[#2F7BFF]/40 bg-[#2F7BFF]/[.08]" : ""}`}>
+                  <SpotCard className={`group flex h-full items-center justify-between gap-4 p-5 ${primary ? "border-[#0078FF]/40 bg-[#0078FF]/[.08]" : ""}`}>
                     <div className="flex items-center gap-4">
-                      <span className={`grid h-11 w-11 place-items-center rounded-xl ${primary ? "bg-[#2F7BFF] text-white" : "border border-white/10 text-white/80"}`}>
+                      <span className={`grid h-11 w-11 place-items-center rounded-xl ${primary ? "bg-[#0078FF] text-white" : "border border-white/10 text-white/80"}`}>
                         <Icon className="h-5 w-5" />
                       </span>
                       <div>

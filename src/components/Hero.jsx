@@ -11,13 +11,13 @@ export function Hero() {
     <section id="inicio" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6">
       <NodeSphere />
       {/* viñeta para legibilidad */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,5,7,.55)_0%,rgba(5,5,7,.15)_45%,rgba(5,5,7,0)_70%)]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#050507]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(1,2,10,.55)_0%,rgba(1,2,10,.15)_45%,rgba(1,2,10,0)_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#01020A]" />
 
       <div className="relative z-10 mx-auto max-w-5xl pt-24 text-center">
         <p className="gx-fade mono mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.03] px-3.5 py-1.5 text-[11px] uppercase tracking-[.22em] text-white/60 backdrop-blur"
           style={{ animationDelay: "200ms" }}>
-          <span className="h-1.5 w-1.5 rounded-full bg-[#B6FF3B] blink" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#9DB8FF] blink" />
           Global Ecosystem for eXcellence
         </p>
 
@@ -30,7 +30,7 @@ export function Hero() {
                 return (
                   <span key={wi} className="gx-word mr-[.22em] last:mr-0" style={{ animationDelay: `${delay}ms` }}>
                     {accent ? (
-                      <span className="bg-gradient-to-r from-[#2F7BFF] via-[#6aa2ff] to-[#B6FF3B] bg-clip-text text-transparent">{word}</span>
+                      <span className="bg-gradient-to-r from-[#0078FF] via-[#4d9bff] to-[#6018F0] bg-clip-text text-transparent">{word}</span>
                     ) : word}
                   </span>
                 );
@@ -46,7 +46,7 @@ export function Hero() {
 
         <div className="gx-fade mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row" style={{ animationDelay: "1450ms" }}>
           <a href="#comunidad"
-            className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-[#050507] transition hover:shadow-[0_0_40px_-6px_rgba(47,123,255,.8)]">
+            className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-[#01020A] transition hover:shadow-[0_0_40px_-6px_rgba(0,120,255,.8)]">
             Unirse a GexClub
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </a>
@@ -61,7 +61,7 @@ export function Hero() {
         style={{ animationDelay: "1900ms" }}>
         Scroll
         <span className="relative h-10 w-px overflow-hidden bg-white/10">
-          <span className="absolute inset-x-0 top-0 h-4 bg-[#2F7BFF] radar-ping" />
+          <span className="absolute inset-x-0 top-0 h-4 bg-[#0078FF] radar-ping" />
         </span>
       </div>
     </section>

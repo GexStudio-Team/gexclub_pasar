@@ -96,11 +96,11 @@ export function NodeSphere() {
           const dx = x - mouse.px, dy = y - mouse.py, dist = Math.hypot(dx, dy);
           if (dist < 150 && near > 0.35) {
             const k = 1 - dist / 150;
-            ctx.strokeStyle = `rgba(182,255,59,${k * 0.55})`;
+            ctx.strokeStyle = `rgba(157,184,255,${k * 0.55})`;
             ctx.lineWidth = 0.7;
             ctx.beginPath(); ctx.moveTo(mouse.px, mouse.py); ctx.lineTo(x, y); ctx.stroke();
             r += k * 2.2; a = Math.min(1, a + k);
-            ctx.fillStyle = `rgba(182,255,59,${a})`;
+            ctx.fillStyle = `rgba(157,184,255,${a})`;
             ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
             continue;
           }
@@ -133,13 +133,13 @@ export function NodeSphere() {
 
       // halo central
       const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, base * 1.25);
-      g.addColorStop(0, `rgba(47,123,255,${0.14 * fade})`);
-      g.addColorStop(1, "rgba(47,123,255,0)");
+      g.addColorStop(0, `rgba(0,120,255,${0.14 * fade})`);
+      g.addColorStop(1, "rgba(0,120,255,0)");
       ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
 
-      drawMesh(pInner, eInner, "182,255,59", 0.38 * fade, 0.6);
-      drawMesh(pOuter, eOuter, "47,123,255", 0.55 * fade, 0.7);
-      drawNodes(pInner, inner.length, "182,255,59", 0.7 * fade, 1.3, false);
+      drawMesh(pInner, eInner, "157,184,255", 0.38 * fade, 0.6);
+      drawMesh(pOuter, eOuter, "0,120,255", 0.55 * fade, 0.7);
+      drawNodes(pInner, inner.length, "157,184,255", 0.7 * fade, 1.3, false);
       drawNodes(pOuter, outer.length, "120,165,255", 0.95 * fade, 1.6, true);
 
       if (running && !reduce) raf = requestAnimationFrame(frame);

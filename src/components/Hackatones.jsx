@@ -20,10 +20,10 @@ function RadarVisual() {
       <div className="absolute inset-0 left-1/2 w-px -translate-x-1/2 bg-white/[.06]" />
       <div className="absolute inset-0 top-1/2 h-px -translate-y-1/2 bg-white/[.06]" />
       <div className="radar-sweep absolute inset-0 rounded-full" />
-      <div className="radar-ping absolute inset-[30%] rounded-full border border-[#2F7BFF]/50" />
-      <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2F7BFF] shadow-[0_0_20px_4px_rgba(47,123,255,.6)]" />
+      <div className="radar-ping absolute inset-[30%] rounded-full border border-[#0078FF]/50" />
+      <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0078FF] shadow-[0_0_20px_4px_rgba(0,120,255,.6)]" />
       <div className="absolute inset-0 grid place-items-center">
-        <span className="mono mt-24 rounded-full border border-white/10 bg-[#050507]/80 px-3 py-1 text-[10px] uppercase tracking-[.25em] text-white/50">
+        <span className="mono mt-24 rounded-full border border-white/10 bg-[#01020A]/80 px-3 py-1 text-[10px] uppercase tracking-[.25em] text-white/50">
           0 señales activas
         </span>
       </div>
@@ -65,8 +65,8 @@ function AlertForm() {
 
   if (status === "done")
     return (
-      <div className="flex items-center gap-3 rounded-2xl border border-[#B6FF3B]/25 bg-[#B6FF3B]/[.06] px-5 py-4 text-sm text-white/85" role="status">
-        <Check className="h-4 w-4 text-[#B6FF3B]" />
+      <div className="flex items-center gap-3 rounded-2xl border border-[#9DB8FF]/25 bg-[#9DB8FF]/[.06] px-5 py-4 text-sm text-white/85" role="status">
+        <Check className="h-4 w-4 text-[#9DB8FF]" />
         Listo. Te escribiremos en cuanto anunciemos la próxima convocatoria.
       </div>
     );
@@ -87,12 +87,12 @@ function AlertForm() {
         Recibir alerta de la próxima edición
       </label>
       <div className={`flex flex-col gap-2 rounded-2xl border bg-black/30 p-1.5 transition sm:flex-row sm:rounded-full ${
-        status === "error" ? "border-red-400/50" : "border-white/10 focus-within:border-[#2F7BFF]/60"}`}>
+        status === "error" ? "border-red-400/50" : "border-white/10 focus-within:border-[#0078FF]/60"}`}>
         <input id="gx-email" type="email" inputMode="email" autoComplete="email" placeholder="tu@correo.com" value={email}
           onChange={(e) => { setEmail(e.target.value); setStatus("idle"); setErrorText(""); }}
           className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none" />
         <button type="submit" disabled={status === "sending"}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/[.06] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#2F7BFF] disabled:cursor-wait disabled:opacity-60 sm:rounded-full">
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/[.06] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#0078FF] disabled:cursor-wait disabled:opacity-60 sm:rounded-full">
           <Bell className="h-4 w-4" /> {status === "sending" ? "Enviando…" : "Avisarme"}
         </button>
       </div>
@@ -131,7 +131,7 @@ function CurrentCalls() {
 
             <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[.07] bg-white/[.07]">
               {rows.map(([k, v]) => (
-                <div key={k} className="bg-[#08080c] px-4 py-3.5">
+                <div key={k} className="bg-[#080A16] px-4 py-3.5">
                   <dt className="mono text-[10px] uppercase tracking-[.18em] text-white/35">{k}</dt>
                   <dd className="mt-1 text-sm text-white/80">{v}</dd>
                 </div>
@@ -149,7 +149,7 @@ function CurrentCalls() {
 function StatusTag() {
   return (
     <span className="mono inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-3 py-1.5 text-[10.5px] font-medium uppercase tracking-[.18em] text-white/75">
-      <Check className="h-3 w-3 text-[#B6FF3B]" /> Finalizado • Edición pasada
+      <Check className="h-3 w-3 text-[#9DB8FF]" /> Finalizado • Edición pasada
     </span>
   );
 }
@@ -161,14 +161,14 @@ function PastEditionCard({ onOpen }) {
       <SpotCard className="overflow-hidden">
         <div className="grid lg:grid-cols-[.9fr_1.1fr]">
           {/* Visual */}
-          <div className="relative min-h-[260px] overflow-hidden border-b border-white/[.06] bg-[linear-gradient(135deg,#0b1430_0%,#050507_70%)] lg:border-b-0 lg:border-r">
+          <div className="relative min-h-[260px] overflow-hidden border-b border-white/[.06] bg-[linear-gradient(135deg,#071230_0%,#01020A_70%)] lg:border-b-0 lg:border-r">
             <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:32px_32px]" />
             <div className="absolute -bottom-10 -left-4 select-none text-[13rem] font-extrabold leading-none tracking-[-.08em] text-white/[.06]">01</div>
-            <div className="absolute right-6 top-6 h-32 w-32 rounded-full bg-[#2F7BFF]/30 blur-3xl" />
+            <div className="absolute right-6 top-6 h-32 w-32 rounded-full bg-[#0078FF]/30 blur-3xl" />
             <div className="relative flex h-full flex-col justify-between p-7 sm:p-9">
               <span className="mono text-[11px] uppercase tracking-[.25em] text-white/45">{e.edition}</span>
               <div>
-                <p className="mono text-[11px] uppercase tracking-[.25em] text-[#B6FF3B]/80">{e.subtitle}</p>
+                <p className="mono text-[11px] uppercase tracking-[.25em] text-[#9DB8FF]/80">{e.subtitle}</p>
                 <p className="mt-2 text-3xl font-bold tracking-[-.03em] text-white">{e.title}</p>
               </div>
             </div>
@@ -187,7 +187,7 @@ function PastEditionCard({ onOpen }) {
 
             <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[.07] bg-white/[.07] sm:grid-cols-4">
               {e.stats.map((s) => (
-                <div key={s.label} className="bg-[#08080c] px-4 py-4">
+                <div key={s.label} className="bg-[#080A16] px-4 py-4">
                   <div className="text-2xl font-semibold tracking-tight text-white"><Ph>{s.value}</Ph></div>
                   <div className="mono mt-1 text-[10px] uppercase tracking-[.15em] text-white/40">{s.label}</div>
                 </div>
@@ -195,7 +195,7 @@ function PastEditionCard({ onOpen }) {
             </div>
 
             <button onClick={onOpen}
-              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-medium text-white transition hover:border-[#2F7BFF] hover:bg-[#2F7BFF]/10">
+              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-medium text-white transition hover:border-[#0078FF] hover:bg-[#0078FF]/10">
               Ver memoria del evento
               <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </button>
@@ -222,9 +222,9 @@ function MemoryModal({ open, onClose }) {
   const e = PAST_EDITION;
   return (
     <div className="fixed inset-0 z-[100] flex items-end justify-center p-0 sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="gx-memory-title">
-      <div className="absolute inset-0 bg-[#050507]/75 backdrop-blur-md" onClick={onClose} />
-      <div className="gx-modal relative max-h-[92svh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-white/10 bg-[#0a0a0f] sm:rounded-3xl">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/[.06] bg-[#0a0a0f]/90 px-6 py-4 backdrop-blur sm:px-8">
+      <div className="absolute inset-0 bg-[#01020A]/75 backdrop-blur-md" onClick={onClose} />
+      <div className="gx-modal relative max-h-[92svh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-white/10 bg-[#080A16] sm:rounded-3xl">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/[.06] bg-[#080A16]/90 px-6 py-4 backdrop-blur sm:px-8">
           <StatusTag />
           <button ref={closeRef} onClick={onClose} aria-label="Cerrar"
             className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/5 hover:text-white">
@@ -256,30 +256,30 @@ function MemoryModal({ open, onClose }) {
           </div>
 
           <h4 className="mono mt-10 flex items-center gap-2 text-[11px] uppercase tracking-[.22em] text-white/45">
-            <Trophy className="h-3.5 w-3.5 text-[#B6FF3B]" /> Ganadores
+            <Trophy className="h-3.5 w-3.5 text-[#9DB8FF]" /> Ganadores
           </h4>
           <ol className="mt-4 divide-y divide-white/[.06] rounded-2xl border border-white/[.07]">
             {e.winners.map((w) => (
               <li key={w.place} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                <span className="mono text-[11px] uppercase tracking-[.18em] text-[#2F7BFF]">{w.place}</span>
+                <span className="mono text-[11px] uppercase tracking-[.18em] text-[#0078FF]">{w.place}</span>
                 <span className="text-sm text-white/80"><Ph>{w.team}</Ph> <span className="text-white/30">·</span> <Ph className="text-white/50">{w.project}</Ph></span>
               </li>
             ))}
           </ol>
 
           <h4 className="mono mt-10 flex items-center gap-2 text-[11px] uppercase tracking-[.22em] text-white/45">
-            <Sparkles className="h-3.5 w-3.5 text-[#B6FF3B]" /> Logros e impacto
+            <Sparkles className="h-3.5 w-3.5 text-[#9DB8FF]" /> Logros e impacto
           </h4>
           <ul className="mt-4 space-y-3">
             {e.highlights.map((h, i) => (
               <li key={i} className="flex gap-3 text-[15px] text-white/65">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2F7BFF]" /><Ph>{h}</Ph>
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0078FF]" /><Ph>{h}</Ph>
               </li>
             ))}
           </ul>
 
           <h4 className="mono mt-10 flex items-center gap-2 text-[11px] uppercase tracking-[.22em] text-white/45">
-            <ImageIcon className="h-3.5 w-3.5 text-[#B6FF3B]" /> Galería
+            <ImageIcon className="h-3.5 w-3.5 text-[#9DB8FF]" /> Galería
           </h4>
           <div className="mt-4 grid grid-cols-3 gap-3">
             {e.photos.map((src, i) => (
@@ -297,7 +297,7 @@ function MemoryModal({ open, onClose }) {
 
           <div className="mt-10 rounded-2xl border border-white/[.07] bg-white/[.02] px-5 py-4 text-sm text-white/55">
             Esta edición ya finalizó y no admite registros. ¿Quieres participar en la próxima?{" "}
-            <a href="#hackatones" onClick={onClose} className="text-[#7aa8ff] underline-offset-4 hover:underline">Activa la alerta del radar</a>.
+            <a href="#hackatones" onClick={onClose} className="text-[#9DB8FF] underline-offset-4 hover:underline">Activa la alerta del radar</a>.
           </div>
         </div>
       </div>

@@ -27,7 +27,7 @@ function ScrollText({ text }) {
   return (
     <p ref={ref} className="text-3xl font-semibold leading-[1.15] tracking-[-.03em] text-white sm:text-5xl lg:text-[3.6rem]">
       {words.map((w, i) => (
-        <span key={i} data-w className={`transition-opacity duration-200 ${/GexClub|juntos/.test(w) ? "text-[#2F7BFF]" : ""}`}>
+        <span key={i} data-w className={`transition-opacity duration-200 ${/GexClub|juntos/.test(w) ? "text-[#0078FF]" : ""}`}>
           {w}{" "}
         </span>
       ))}
@@ -42,7 +42,7 @@ function PixelGrid() {
   return (
     <div className="grid gap-1" style={{ gridTemplateColumns: "repeat(24, minmax(0, 1fr))" }} aria-hidden>
       {cells.map((_, i) => (
-        <span key={i} className="aspect-square rounded-[3px] bg-[#2F7BFF]"
+        <span key={i} className="aspect-square rounded-[3px] bg-[#0078FF]"
           style={{ animation: `gxPixel ${2.5 + ((i * 7) % 5) * 0.6}s ease-in-out ${(i * 37) % 23 / 10}s infinite`, opacity: 0.08 }} />
       ))}
     </div>
@@ -55,7 +55,7 @@ function CodeLines() {
     ["club", ".", "build", "(", "ideas", ");"],
     ["await", " club", ".", "ship", "();"],
   ];
-  const colors = ["text-[#2F7BFF]", "text-white/70", "text-white/40", "text-[#B6FF3B]/80", "text-white/80", "text-white/40"];
+  const colors = ["text-[#0078FF]", "text-white/70", "text-white/40", "text-[#9DB8FF]/80", "text-white/80", "text-white/40"];
   return (
     <pre className="mono overflow-hidden rounded-2xl border border-white/[.06] bg-black/40 p-4 text-[11.5px] leading-6" aria-hidden>
       {lines.map((l, i) => (
@@ -63,7 +63,7 @@ function CodeLines() {
           {l.map((tok, j) => <span key={j} className={colors[j % colors.length]}>{tok}</span>)}
         </div>
       ))}
-      <div><span className="mr-3 text-white/20">04</span><span className="blink inline-block h-3.5 w-2 translate-y-0.5 bg-[#B6FF3B]" /></div>
+      <div><span className="mr-3 text-white/20">04</span><span className="blink inline-block h-3.5 w-2 translate-y-0.5 bg-[#9DB8FF]" /></div>
     </pre>
   );
 }
@@ -74,7 +74,7 @@ function Pillar({ code, icon: Icon, title, desc, tags, children, className = "",
       <SpotCard className="flex h-full flex-col justify-between gap-8 p-7 sm:p-8">
         <div className="flex items-start justify-between">
           <span className="mono text-[11px] tracking-[.2em] text-white/35">{code}</span>
-          <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[.03] text-[#2F7BFF]">
+          <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[.03] text-[#0078FF]">
             <Icon className="h-[18px] w-[18px]" strokeWidth={1.6} />
           </span>
         </div>
@@ -120,9 +120,9 @@ export function Ecosistema() {
             desc="UI/UX, 3D, ilustración y motion. Porque lo que se ve bien, se usa más."
             tags={["UI/UX", "3D", "Motion"]}>
             <div className="relative h-24 overflow-hidden rounded-2xl border border-white/[.06]" aria-hidden>
-              <div className="absolute -left-6 top-2 h-24 w-24 rounded-full bg-[#2F7BFF]/60 blur-2xl" />
-              <div className="absolute right-0 -top-4 h-20 w-20 rounded-full bg-[#B6FF3B]/40 blur-2xl" />
-              <div className="absolute bottom-3 left-4 mono text-[10px] tracking-widest text-white/60">#2F7BFF · #B6FF3B</div>
+              <div className="absolute -left-6 top-2 h-24 w-24 rounded-full bg-[#0078FF]/60 blur-2xl" />
+              <div className="absolute right-0 -top-4 h-20 w-20 rounded-full bg-[#6018F0]/40 blur-2xl" />
+              <div className="absolute bottom-3 left-4 mono text-[10px] tracking-widest text-white/60">#0078FF · #6018F0</div>
             </div>
           </Pillar>
           <Pillar className="md:col-span-6" code="P.04" icon={Users} delay={100}
@@ -131,8 +131,8 @@ export function Ecosistema() {
             tags={["Mentorías", "Retos", "Hackatones", "Talleres"]}>
             <div className="flex items-center gap-4" aria-hidden>
               <div className="flex -space-x-2">
-                {["#2F7BFF", "#B6FF3B", "#7aa8ff", "#ffffff", "#3d5bff"].map((c, i) => (
-                  <span key={i} className="h-9 w-9 rounded-full border-2 border-[#050507]" style={{ background: `radial-gradient(circle at 30% 30%, ${c}, #0b0b12 75%)` }} />
+                {["#0078FF", "#6018F0", "#9DB8FF", "#ffffff", "#1848F0"].map((c, i) => (
+                  <span key={i} className="h-9 w-9 rounded-full border-2 border-[#01020A]" style={{ background: `radial-gradient(circle at 30% 30%, ${c}, #050713 75%)` }} />
                 ))}
               </div>
               <span className="mono text-[11px] uppercase tracking-[.2em] text-white/40">{BRAND.motto}</span>

@@ -12,11 +12,11 @@ import { Navbar } from "./components/Navbar";
 
 export default function GexClubV2() {
   return (
-    <div className="gx relative min-h-screen overflow-x-clip bg-[#050507] text-white antialiased">
+    <div className="gx relative min-h-screen overflow-x-clip bg-[#01020A] text-white antialiased">
       {/* iluminación ambiental */}
       <div className="pointer-events-none fixed inset-0 -z-0">
-        <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[#2F7BFF]/[.08] blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-[#B6FF3B]/[.025] blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[#0078FF]/[.08] blur-[140px]" />
+        <div className="absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-[#9DB8FF]/[.025] blur-[140px]" />
       </div>
 
       <Navbar />

@@ -2,7 +2,34 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
-## [Unreleased] — 2026-11-27 07:40 America/Bogota
+## [Unreleased] — 2026-11-27 02:50 America/Bogota
+
+### Paleta alineada al logo y datos reales del sitio v0.4.0
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `refactor` | Se eliminó el verde lima `#B6FF3B` de `src/`, `tailwind.config.js` e `index.html`. La paleta canonical pasó a ser `#0078FF`, `#6018F0`, `#9DB8FF` y fondo `#01020A`, derivada del PNG oficial del logo. | El usuario detectó que el verde no pertenecía a la identidad visual. |
+| `refactor` | Se renombraron los tokens `lime` a `secondary`/`violet` en CSS, Tailwind, Canvas 2D y Three.js; el emblema líquido ahora usa azul marca. | Mantener una sola semántica de color en toda la aplicación. |
+| `data` | Se cargaron como reales la fecha, el horario, la sede en Barranquilla, el formato de game jam, el resumen y el correo `gexstudioteam@gmail.com`, tomados del sitio v0.4.0 y de la ficha pública de Luma. | Aprovechar información verificable sin reactivar convocatorias ni contadores. |
+| `data` | Cifras, ganadores y fotos permanecen como `TEMP`; `LINKS.discord` sigue siendo placeholder porque no hay invitación pública. | El sitio oficial no publica resultados ni enlace de Discord; no se inventaron datos. |
+| `docs` | Se agregaron `docs/ADR-004-paleta-y-datos-reales.md` y `docs/Informe-skills-agentes.md`, y se actualizaron `README.md`, `TODO.md`, `docs/Arquitectura.md` y `PROMPT-ANTIGRAVITY.md`. | Registrar la decisión de paleta, el origen de los datos y la investigación de skills. |
+| `docs` | Se corrigieron las marcas de tiempo de las dos entradas anteriores a hora real de `America/Bogota`. | El registro indicaba UTC con la etiqueta de zona horaria local. |
+
+### Verificación
+
+| Prueba | Resultado |
+| --- | --- |
+| `npm run build` | Correcto, sin avisos. `three` 449,64 kB (117,14 kB gzip), `index` 56,39 kB, `icons` 9,10 kB, `react` 141,67 kB y CSS 30,96 kB. |
+| Búsqueda de tokens en `src/` y `dist/` | Sin `B6FF3B`, `2F7BFF`, `rgba(182,255,59,…)`, `rgba(47,123,255,…)`, `lime`, `#050507` ni `#0a0a0f`. |
+| Servidor de desarrollo `5173` | Sin errores en consola. Variables resueltas: `--accent #0078FF`, `--violet #6018F0`, `--secondary #9DB8FF`, `--bg #01020A`; fase “GexClub” activa al 28 % de la pista. |
+| Build servido en `4173` | Sin errores en consola. Mismas variables y sede real visible en el DOM. |
+
+### Informe externo y Discord
+
+- Se compararon `mattpocock/skills`, `obra/superpowers` y `anthropics/skills`. Se recomendó `mattpocock/skills` (~333.800 stars, MIT) y se documentó en `docs/Informe-skills-agentes.md`. **No se descargó ni instaló nada**; queda pendiente la decisión del usuario.
+- El formulario de registro de Discord se abrió, pero **no se completó ni se creó la cuenta** con `gexstudioteam@gmail.com`: faltó la fecha de nacimiento y Gmail aparece sin sesión iniciada para leer el código de verificación.
+
+## [Unreleased] — 2026-11-27 02:40 America/Bogota
 
 ### Metal líquido → logo de GexClub en “La forja”
 
@@ -22,7 +49,7 @@ Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `
 | Medición de cuadros en el tramo del logo | 58–60 fps tras limitar la deformación a 30 Hz durante la pausa; 60 fps antes y después del tramo. Medido en el navegador integrado. |
 | Build servido en `4173` | Sin errores en consola; canvas activo y fase “GexClub” alcanzada al mismo punto de scroll. |
 
-## [Unreleased] — 2026-11-27 07:05 America/Bogota
+## [Unreleased] — 2026-11-27 02:05 America/Bogota
 
 ### Corrección: el cursor solo aparece cuando hay trabajo real
 

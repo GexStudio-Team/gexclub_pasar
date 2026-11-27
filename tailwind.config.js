@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        gx: { bg: "#050507", accent: "#2F7BFF", lime: "#B6FF3B" },
+        gx: { bg: "#01020A", accent: "#0078FF", soft: "#9DB8FF", violet: "#6018F0" },
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],

@@ -45,7 +45,7 @@ export function SpotCard({ className = "", children, ...rest }) {
 export function Eyebrow({ index, children }) {
   return (
     <div className="mono flex items-center gap-3 text-[11px] uppercase tracking-[.25em] text-white/45">
-      <span className="text-[#2F7BFF]">{index}</span>
+      <span className="text-[#0078FF]">{index}</span>
       <span className="h-px w-8 bg-white/15" />
       {children}
     </div>
@@ -70,11 +70,11 @@ export function Logo({ compact = false }) {
       {imgOk ? (
         <img src={BRAND.logoMark} alt="" onError={() => setImgOk(false)} className="h-7 w-7 rounded-md object-cover" />
       ) : (
-        <span className="mono grid h-7 w-7 place-items-center rounded-md bg-[#2F7BFF] text-[11px] font-bold text-white">GX</span>
+        <span className="mono grid h-7 w-7 place-items-center rounded-md bg-[#0078FF] text-[11px] font-bold text-white">GX</span>
       )}
       {!compact && (
         <span className="mono text-[13px] font-bold tracking-tight text-white">
-          GEX<span className="text-[#2F7BFF]">_</span>CLUB
+          GEX<span className="text-[#0078FF]">_</span>CLUB
         </span>
       )}
     </a>
