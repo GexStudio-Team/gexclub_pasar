@@ -144,6 +144,6 @@ El endpoint se valida con el patrón `https://formspree.io/f/<ID>` antes de envi
 
 ## Estado de Git
 
-La carpeta `GexClub-v2` no era un repositorio Git al momento de la migración. Se inicializó el repositorio local sobre la rama `main` y se configuró `origin` apuntando a `https://github.com/GexStudio-Team/gexclub_pasar.git`.
+La carpeta `GexClub-v2` no era un repositorio Git al momento de la migración. Se inicializó el repositorio local y se configuró `origin` apuntando a `https://github.com/GexStudio-Team/gexclub_pasar.git`. La rama de trabajo se renombró a `v2` para publicar sin afectar `main`.
 
 Estado verificado: rama de trabajo `v2` con los commits `6d641b7` y `47e9d66` más el commit documental de la estrategia de publicación. La rama se publica en `origin/v2`, sin modificar `origin/main`. El remoto `main` conserva su commit `67c1c33` con `deploy/` y `codigo-completo/`; por eso no se hizo push directo sobre esa rama. La eventual unificación de historiales queda registrada en `TODO.md`.
