@@ -31,7 +31,7 @@ GexClub-v2/
 │   ├── App.jsx
 │   ├── data.js
 │   ├── hooks.js
-│   ├── cursorSync.js     # relay de cursores en vivo, solo desarrollo
+│   ├── cursorSync.js     # cursor de trabajo ante cambios reales, solo desarrollo
 │   ├── index.css
 │   └── components/
 │       ├── Primitives.jsx
@@ -52,7 +52,7 @@ GexClub-v2/
 └── onix-t1.html           # demo heredada
 ```
 
-`src/cursorSync.js` se carga con un `import()` dinámico dentro de `if (import.meta.env.DEV)` en `src/main.jsx`. El plugin `gx-live-cursor-relay` de `vite.config.js` reenvía los eventos `gx-cursor` entre clientes conectados al WebSocket de HMR. Rollup elimina esa rama en producción, por lo que `dist/` no contiene el relay.
+`src/cursorSync.js` se carga con un `import()` dinámico dentro de `if (import.meta.env.DEV)` en `src/main.jsx`. El plugin `gx-agent-work-cursor` de `vite.config.js` observa `server.watcher` y emite `gx-work` por el WebSocket de HMR solo cuando cambia un archivo real; el navegador muestra el cursor sobre la sección correspondiente y lo oculta tras 4,2 s sin cambios. No hay seguimiento del ratón ni recorridos animados. Rollup elimina esa rama en producción, por lo que `dist/` no contiene el cursor.
 
 ## Componentes
 

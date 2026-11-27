@@ -1,23 +1,42 @@
+import path from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-/** Relay de cursores entre clientes conectados al dev server. Solo en desarrollo. */
-function liveCursorRelay() {
+/** Avisa al navegador solo cuando cambia un archivo real. Solo en desarrollo. */
+function agentWorkCursor() {
   return {
-    name: "gx-live-cursor-relay",
+    name: "gx-agent-work-cursor",
     apply: "serve",
     configureServer(server) {
-      server.ws.on("gx-cursor", (payload, client) => {
-        for (const other of server.ws.clients) {
-          if (other !== client) other.send("gx-cursor", payload);
-        }
-      });
+      const relevant = /\.(jsx?|css|html|md|json)$/;
+      let timer = null;
+      let pending = null;
+
+      const notify = (file) => {
+        const rel = path.relative(process.cwd(), file).replace(/\\/g, "/");
+        if (rel.startsWith("dist/") || rel.startsWith("node_modules/") || rel.startsWith("public/")) return;
+        if (!relevant.test(rel)) return;
+        pending = rel;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          server.ws.send({
+            type: "custom",
+            event: "gx-work",
+            data: { file: pending, at: Date.now() },
+          });
+          pending = null;
+        }, 140);
+      };
+
+      server.watcher.on("change", notify);
+      server.watcher.on("add", notify);
+      server.watcher.on("unlink", notify);
     },
   };
 }
 
 export default defineConfig({
-  plugins: [react(), liveCursorRelay()],
+  plugins: [react(), agentWorkCursor()],
   server: {
     host: "127.0.0.1",
     port: 5173,

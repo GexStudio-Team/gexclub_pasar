@@ -43,15 +43,11 @@ npm run dev
 
 Abre `http://127.0.0.1:5173/`.
 
-### Cursores en vivo (solo desarrollo)
+### Cursor de trabajo (solo desarrollo)
 
-El servidor de desarrollo incluye un relay de cursores sobre el WebSocket de HMR de Vite (`src/cursorSync.js`). No usa dependencias nuevas y **no se incluye en el build de producción**. Para verlo:
+El servidor de desarrollo avisa cuando cambia un archivo real (`src/`, documentación, `index.html` o configuración) y muestra brevemente un cursor verde con el nombre del archivo sobre la sección afectada. **No hay recorridos animados ni seguimiento del ratón**: si no estoy editando algo, el cursor permanece oculto.
 
-1. Abre `http://127.0.0.1:5173/?cursor=AGENTE` en el navegador de OpenCode.
-2. Abre `http://127.0.0.1:5173/?cursor=INVITADO` en otro navegador o pestaña.
-3. Mueve el puntero: cada cliente dibuja su cursor y el de los demás, con el nombre y un anillo al hacer clic.
-
-Cualquier nombre en el parámetro `?cursor=` se muestra con color propio; `AGENTE` usa verde y `INVITADO` azul. Al recargar, los cursores vuelven a sincronizarse.
+El aviso viaja por el WebSocket de HMR de Vite (`src/cursorSync.js` y el plugin `gx-agent-work-cursor` en `vite.config.js`). No usa dependencias nuevas y **no se incluye en el build de producción**. Para verlo, abre `http://127.0.0.1:5173/` en el Review pane y espera un cambio real.
 
 ## Build de producción
 

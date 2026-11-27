@@ -2,6 +2,25 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
+## [Unreleased] — 2026-11-27 07:05 America/Bogota
+
+### Corrección: el cursor solo aparece cuando hay trabajo real
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `fix` | Se eliminó el recorrido animado, el seguimiento del puntero y el relay entre pestañas. El cursor ahora se dispara únicamente con `gx-work`, emitido por `server.watcher` cuando cambia un archivo real. | El usuario quiere ver al agente trabajar, no una animación en reposo. |
+| `fix` | El cursor se muestra sobre la sección asociada al archivo (`Hero`, `Ecosistema`, `La forja`, `Hackatones`, `Comunidad`) con la etiqueta `AGENTE · EDITANDO <archivo>`, y se oculta a los 4,2 s sin cambios. | Hacer visible la edición real sin dejar artefactos permanentes. |
+| `docs` | Se actualizaron `README.md`, `TODO.md` y `docs/Arquitectura.md` para reflejar el nuevo comportamiento. | Evitar documentación que describa el modo animado ya descartado. |
+
+### Verificación
+
+| Prueba | Resultado |
+| --- | --- |
+| Estado en reposo | Tras recargar `http://127.0.0.1:5173/`: `activo:false`, opacidad `0`, sin `gxTourId` ni `gxHeartbeat`. |
+| Cambio real en `TODO.md` | `window.__gxWorkCursor.historial` registró exactamente un evento (`TODO.md`), con etiqueta `AGENTE · EDITANDO TODO.md` y badge `TRABAJANDO EN TODO.md`. |
+| Consola | Sin errores; solo el aviso informativo de React DevTools. |
+| Build | Sin cambios respecto al build anterior; el cursor sigue fuera de `dist/`. |
+
 ## [Unreleased] — 2026-11-27 06:40 America/Bogota
 
 ### Cursores en vivo para la revisión en OpenCode

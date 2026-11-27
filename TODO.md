@@ -21,7 +21,7 @@ Estado de la web v2 de GexClub.
 - [x] Dividir el bundle JS en chunks `three`, `react`, `icons` y `index`.
 - [x] Verificar el build dividido en `http://127.0.0.1:4173/` sin errores de consola.
 - [x] Inicializar Git en `GexClub-v2` y configurar `origin` a `gexclub_pasar` (commit local `6d641b7`).
-- [x] Agregar cursores sincronizados en tiempo real sobre el HMR de Vite, solo en desarrollo (`src/cursorSync.js`). El build de producción queda sin referencias al relay.
+- [x] Mostrar el cursor del agente solo cuando ocurre un cambio real, avisado por el watcher de Vite (`src/cursorSync.js` y el plugin `gx-agent-work-cursor`). Sin movimiento animado en reposo y sin referencias en el build de producción.
 
 ## En progreso
 
