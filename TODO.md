@@ -22,6 +22,7 @@ Estado de la web v2 de GexClub.
 - [x] Verificar el build dividido en `http://127.0.0.1:4173/` sin errores de consola.
 - [x] Inicializar Git en `GexClub-v2` y configurar `origin` a `gexclub_pasar` (commit local `6d641b7`).
 - [x] Mostrar el cursor del agente solo cuando ocurre un cambio real, avisado por el watcher de Vite (`src/cursorSync.js` y el plugin `gx-agent-work-cursor`). Sin movimiento animado en reposo y sin referencias en el build de producción.
+- [x] Portar el tramo de metal líquido → logo de GexClub a `src/components/LiquidForge.jsx`, con módulos npm de Three.js, cámara dedicada y deformación limitada a 30 Hz durante la pausa (ADR-003).
 
 ## En progreso
 

@@ -4,7 +4,7 @@ Continúa el desarrollo de la **web v2 de GexClub**, una comunidad juvenil de te
 
 ## Archivos
 
-> Estado actual: el proyecto ya fue migrado a Vite. La fuente canonical es `src/App.jsx` y los componentes en `src/components/`. Los archivos listados abajo como “heredados” se conservan solo como referencia del prototipo.
+> Estado actual: el proyecto ya fue migrado a Vite. La fuente canonical es `src/App.jsx` y los componentes en `src/components/`. Los archivos listados abajo como “heredados” se conservan solo como referencia del prototipo. Las descripciones de “La forja” en este brief corresponden al estado original; la implementación vigente (830vh, tramo de logo líquido) está documentada en `docs/Arquitectura.md` y `docs/ADR-003-logo-liquido.md`.
 
 - `package.json`, `vite.config.js`, `tailwind.config.js`, `postcss.config.js`: configuración del proyecto Vite.
 - `index.html`: entrada HTML del proyecto Vite.

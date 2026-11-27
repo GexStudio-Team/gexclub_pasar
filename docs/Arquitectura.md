@@ -83,10 +83,12 @@ graph TD
 | `hooks.js` | `useInView` y `useParallax`. |
 | `Primitives.jsx` | `Ph`, `Reveal`, `SpotCard`, `Eyebrow`, `GiantWord`, `Logo` e iconos SVG locales. |
 | `NodeSphere.jsx` | Esfera geodésica en Canvas 2D con dos capas y reacción al cursor/scroll. |
-| `LiquidForge.jsx` | Escena Three.js controlada por scroll; incluye `FORGE_STAGES` y `createForge()`. |
+| `LiquidForge.jsx` | Escena Three.js controlada por scroll: gota de metal → logo de GexClub → control. Incluye `FORGE_STAGES`, `createForge()`, `buildLogoGeometry()` y `updateLogo()` (ADR-003). |
 | `Hackatones.jsx` | Radar en espera, formulario de alerta y archivo de la Edición 01 con modal. |
 | `Comunidad.jsx` | Enlaces de comunidad. |
 | `Footer.jsx` | Navegación secundaria y pie. |
+
+La línea de tiempo de “La forja” inserta el tramo del logo en `q = 0.22` con anchura `W = 0.3`, de modo que el progreso total es `1,3` y la pista mide `830vh`. Durante la pausa del emblema, la deformación de vértices se actualiza a 30 Hz mientras el render y la cámara permanecen a 60 fps. El detalle y la justificación están en `docs/ADR-003-logo-liquido.md`.
 
 ## Flujo de datos
 

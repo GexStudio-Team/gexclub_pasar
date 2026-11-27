@@ -2,6 +2,26 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
+## [Unreleased] — 2026-11-27 07:40 America/Bogota
+
+### Metal líquido → logo de GexClub en “La forja”
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `feat` | Se portó a `src/components/LiquidForge.jsx` el tramo en el que la gota de metal líquido forma el emblema de GexClub, lo sostiene y vuelve a su forma, usando `THREE.Shape`, `ExtrudeGeometry`, `TessellateModifier` y `mergeVertices` importados desde npm. | Completar la sección con el tramo presente en el prototipo local `forja-logo.html`, sin volver a cargar scripts desde CDN. |
+| `feat` | Se insertó la línea de tiempo `Q_LOGO = 0.22`, `W = 0.3`, `TOTAL = 1,3`, con la fase “GexClub” en `P = 0,27`, cámara frontal `LOGO_CAM` y pista de `830vh`. | Dar espacio al tramo nuevo y mantener el orden narrativo de las ocho fases. |
+| `perf` | La deformación de vértices del logo se actualiza a 30 Hz mientras `k >= 0.999`; el render y la cámara siguen a 60 fps. La subdivisión es adaptativa en pantallas menores a 768 px. | Mantener el objetivo de 60 fps y reducir el coste durante la pausa del emblema. |
+| `docs` | Se agregó `docs/ADR-003-logo-liquido.md` y se actualizaron `README.md`, `TODO.md`, `docs/Arquitectura.md` y `PROMPT-ANTIGRAVITY.md`. | Registrar la decisión técnica y dejar claro que el brief original describe el estado previo. |
+
+### Verificación
+
+| Prueba | Resultado |
+| --- | --- |
+| `npm run build` | Correcto, sin avisos. `three` 449,64 kB (117,14 kB gzip), `index` 55,99 kB, `icons` 9,10 kB, `react` 141,67 kB y CSS 31,13 kB. Sin referencias a `cdn.jsdelivr.net` en `dist/`. |
+| Servidor de desarrollo `5173` | Sin errores en consola. Al 28 % de la pista, la fase activa es “GexClub”. Captura de pantalla del momento del logo guardada por el navegador. |
+| Medición de cuadros en el tramo del logo | 58–60 fps tras limitar la deformación a 30 Hz durante la pausa; 60 fps antes y después del tramo. Medido en el navegador integrado. |
+| Build servido en `4173` | Sin errores en consola; canvas activo y fase “GexClub” alcanzada al mismo punto de scroll. |
+
 ## [Unreleased] — 2026-11-27 07:05 America/Bogota
 
 ### Corrección: el cursor solo aparece cuando hay trabajo real

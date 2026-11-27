@@ -7,7 +7,7 @@ Web v2 de GexClub: una comunidad juvenil de tecnología, desarrollo de videojueg
 ## ¿Qué incluye?
 
 - Portada con esfera geodésica animada en Canvas 2D.
-- Sección “La forja”: animación 3D controlada por scroll con metal líquido y un control de videojuego ensamblado con primitivas propias.
+- Sección “La forja”: animación 3D controlada por scroll en la que el metal líquido forma el logo de GexClub y después ensambla un control de videojuego con primitivas propias.
 - Ecosistema de pilares: videojuegos, ingeniería, diseño y comunidad.
 - Bloque de hackatones sin convocatorias activas y archivo de la Edición 01 con etiqueta **FINALIZADO • EDICIÓN PASADA**.
 - Modal de memoria del evento, sin opciones de inscripción.

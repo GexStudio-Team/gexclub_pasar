@@ -2,20 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
+import { TessellateModifier } from "three/examples/jsm/modifiers/TessellateModifier.js";
+import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { Eyebrow } from "./Primitives";
 
-/* ───────────────────────── LIQUID FORGE (metal líquido → control) ─────────────────────────
+/* ───────────────────────── LIQUID FORGE (metal líquido → logo → control) ─────────────────────────
  * Animación 3D controlada por scroll con Three.js r147 importado desde npm.
  */
+
+/* Se inserta un tramo de longitud W en q = Q_LOGO: el líquido forma el logo
+ * de GexClub, lo sostiene y vuelve a la gota antes del ensamblaje. */
+const Q_LOGO = 0.22, W = 0.3, TOTAL = 1 + W;
 
 const FORGE_STAGES = [
   [0.0, "Idea", "Todo proyecto empieza como algo sin forma."],
   [0.15, "Impulso", "Le das energía y la idea se levanta."],
-  [0.29, "Prototipo", "Primera versión: simple, redonda y funcional."],
-  [0.46, "Arquitectura", "Se aplana y se ordena. Ahora hay una base."],
-  [0.55, "Iteración", "Pruebas, errores, picos. Así se aprende de verdad."],
-  [0.645, "Ensamblaje", "Código, electrónica y diseño encajan pieza por pieza."],
-  [0.85, "Tu juego", "Del caos al control. Esto se construye en GexClub."],
+  [0.27, "GexClub", "La idea encuentra su forma dentro de la comunidad."],
+  [0.29 + W, "Prototipo", "Primera versión: simple, redonda y funcional."],
+  [0.46 + W, "Arquitectura", "Se aplana y se ordena. Ahora hay una base."],
+  [0.55 + W, "Iteración", "Pruebas, errores, picos. Así se aprende de verdad."],
+  [0.645 + W, "Ensamblaje", "Código, electrónica y diseño encajan pieza por pieza."],
+  [0.85 + W, "Tu juego", "Del caos al control. Esto se construye en GexClub."],
 ];
 
 function createForge({ canvas, stage, track, onStage, onProgress }) {
@@ -98,13 +105,19 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
     const a = keys[i], b = keys[i + 1], t = easeInOut(clamp((p - a[0]) / (b[0] - a[0] || 1)));
     return a.map((v, k) => lerp(v, b[k], t));
   };
-  function updateBlob(p, time) {
+  // Estado de la gota: el logo lo usa como origen de cada uno de sus vértices.
+  const B = { sx: 1, sy: 1, sz: 1, py: 0, ry: 0, nAmp: 0, lift: 0, t: 0, f: 1.6, time: 0 };
+  function updateBlob(p, time, shrink) {
     const [, sx, sy, sz, hover, nAmp, lift, spike] = sampleKeys(BK, p);
-    blob.visible = sx > 0.01; if (!blob.visible) return;
-    blob.scale.set(sx, sy, sz);
-    blob.position.y = sy + hover + Math.sin(time * 1.4) * 0.04 * hover;
-    blob.rotation.y = time * 0.15 + p * 4;
-    const arr = posAttr.array, t = time * 0.55, f = sy < 0.3 ? 2.6 : 1.6;
+    B.sx = sx; B.sy = sy; B.sz = sz; B.nAmp = nAmp; B.lift = lift;
+    B.py = sy + hover + Math.sin(time * 1.4) * 0.04 * hover;
+    B.ry = time * 0.15 + p * 4; B.t = time * 0.55; B.f = sy < 0.3 ? 2.6 : 1.6; B.time = time;
+    const s = 1 - shrink;
+    blob.visible = sx > 0.01 && s > 0.01; if (!blob.visible) return;
+    blob.scale.set(sx * s, sy * s, sz * s);
+    blob.position.y = B.py;
+    blob.rotation.y = B.ry;
+    const arr = posAttr.array, t = B.t, f = B.f;
     for (let i = 0; i < VN; i++) {
       const j = i * 3, x = base[j], y = base[j + 1], z = base[j + 2];
       let r = 1;
@@ -115,6 +128,94 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
       arr[j] = x * r; arr[j + 1] = yy; arr[j + 2] = z * r;
     }
     posAttr.needsUpdate = true; blobGeo.computeVertexNormals();
+  }
+
+  /* ── Logo de GexClub en metal líquido ─────────────────────────────────────────────────
+   * Emblema propio construido con primitivas: un hexágono en forma de "E" con
+   * tres ranuras diagonales y tres puntos. Se genera en un marco girado 30°
+   * y se subdivide para poder deformarlo sin facetas.
+   */
+  function buildLogoGeometry() {
+    // [u, v, radio de esquina]
+    const P = [
+      [-100, -173, 20], [100, -173, 20], [145, -95, 26],
+      [-44, -95, 15], [-44, -65, 15],          // ranura 1
+      [88, -65, 30], [88, -5, 30],             // brazo 2
+      [-87, -5, 15], [-87, 25, 15],            // ranura 2
+      [118, 25, 30], [118, 85, 30],            // brazo 3
+      [-52, 85, 15], [-52, 115, 15],           // ranura 3
+      [21, 115, 29], [21, 173, 29],            // brazo inferior
+      [-100, 173, 20], [-200, 0, 22],
+    ];
+    const main = new THREE.Shape(), n = P.length;
+    for (let i = 0; i < n; i++) {
+      const [px, py, pr] = P[i], A = P[(i - 1 + n) % n], C = P[(i + 1) % n];
+      const ax = A[0] - px, ay = A[1] - py, cx = C[0] - px, cy = C[1] - py;
+      const la = Math.hypot(ax, ay), lc = Math.hypot(cx, cy), r = Math.min(pr, la / 2, lc / 2);
+      const x1 = px + (ax / la) * r, y1 = py + (ay / la) * r, x2 = px + (cx / lc) * r, y2 = py + (cy / lc) * r;
+      if (i === 0) main.moveTo(x1, -y1); else main.lineTo(x1, -y1);
+      main.quadraticCurveTo(px, -py, x2, -y2);
+    }
+    main.closePath();
+    const dots = [[144, -32, 25], [165, 55, 22], [68, 144, 25]].map(([u, v, r]) => {
+      const dot = new THREE.Shape(); dot.absarc(u, -v, r, 0, Math.PI * 2, false); return dot;
+    });
+
+    const DEPTH = 40, BEV = 16;
+    let g = new THREE.ExtrudeGeometry([main, ...dots], {
+      depth: DEPTH, curveSegments: small ? 8 : 12, bevelEnabled: true,
+      bevelThickness: BEV, bevelSize: 12, bevelOffset: 0, bevelSegments: small ? 3 : 5,
+    });
+    g.translate(-8, 0, -DEPTH / 2);
+    g.rotateZ(Math.PI / 6);
+    g.scale(0.0052, 0.0052, 0.0052);
+    g = new TessellateModifier(small ? 0.075 : 0.05, small ? 10 : 24).modify(g);
+    g.deleteAttribute("normal"); g.deleteAttribute("uv");
+    g = mergeVertices(g, 1e-5);
+    g.computeVertexNormals();
+    return g;
+  }
+  const logoGeo = buildLogoGeometry();
+  const LC = new THREE.Vector3(0, 1.2, 0);                       // centro del logo en escena
+  const LN = logoGeo.attributes.position.count;
+  const lBase = new Float32Array(logoGeo.attributes.position.array); // posición final (relativa a LC)
+  const lNorm = new Float32Array(logoGeo.attributes.normal.array);
+  const lDelay = new Float32Array(LN);
+  for (let i = 0; i < LN; i++) lDelay[i] = clamp(Math.hypot(lBase[i * 3], lBase[i * 3 + 1]) / 1.2);
+  const logoMat = liquid.clone();
+  const C_DARK = new THREE.Color(0x020203), C_BRAND = new THREE.Color(0x1638c9);
+  const logo = new THREE.Mesh(logoGeo, logoMat); logo.frustumCulled = false; logo.visible = false; scene.add(logo);
+
+  function updateLogo(k, hold, time) {
+    logo.visible = k > 0.0005; if (!logo.visible) return;
+    const arr = logoGeo.attributes.position.array;
+    const sway = Math.sin(time * 0.6) * 0.2 * hold, ca = Math.cos(sway), sa = Math.sin(sway);
+    const cr = Math.cos(B.ry), sr = Math.sin(B.ry);
+    const D = 0.7, t = time * 0.7;
+    for (let i = 0; i < LN; i++) {
+      const j = i * 3;
+      // destino: el logo, con un leve vaivén mientras se sostiene
+      const bx = lBase[j], by = lBase[j + 1], bz = lBase[j + 2];
+      const Lx = LC.x + bx * ca + bz * sa, Ly = LC.y + by, Lz = LC.z - bx * sa + bz * ca;
+      // origen: el punto de la gota en esa misma dirección, con su ruido y sus púas
+      const rx = Lx, ry = Ly - B.py, rz = Lz;
+      let ux = (rx * cr - rz * sr) / B.sx, uy = ry / B.sy, uz = (rx * sr + rz * cr) / B.sz;
+      const il = 1 / (Math.hypot(ux, uy, uz) || 1); ux *= il; uy *= il; uz *= il;
+      let r = 1;
+      if (B.nAmp > 0.001) r += B.nAmp * noise(ux * B.f + B.t, uy * B.f + B.t * 0.6, uz * B.f - B.t * 0.8);
+      let sy = uy * r;
+      if (B.lift > 0.001) { const yy = Math.max(0, uy); sy += B.lift * yy * yy * yy * yy * (1.1 + 0.25 * noise(ux * 2 + B.t, 3.1, uz * 2)); }
+      const lx = ux * r * B.sx, ly = sy * B.sy, lz = uz * r * B.sz;
+      const Sx = lx * cr + lz * sr, Sy = B.py + ly, Sz = -lx * sr + lz * cr;
+      // el centro se forma primero y los puntos al final
+      const e = easeInOut(clamp(k * (1 + D) - lDelay[i] * D));
+      const rip = (0.09 * Math.sin(Math.PI * e) + 0.01 * hold) * noise(Lx * 2.3 + t, Ly * 2.3 - t * 0.7, Lz * 2.3 + t * 0.5);
+      arr[j] = Sx + (Lx - Sx) * e + lNorm[j] * rip;
+      arr[j + 1] = Sy + (Ly - Sy) * e + lNorm[j + 1] * rip;
+      arr[j + 2] = Sz + (Lz - Sz) * e + lNorm[j + 2] * rip;
+    }
+    logoGeo.attributes.position.needsUpdate = true; logoGeo.computeVertexNormals();
+    logoMat.color.copy(C_DARK).lerp(C_BRAND, hold * 0.75);
   }
 
   /* control de videojuego (primitivas) */
@@ -205,6 +306,7 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
     [0.36, 0.4, 1.7, 6.4, 0, 1.3, 0], [0.5, -2.0, 4.6, 6.2, 0, 0.5, 0], [0.62, -4.2, 2.4, 6.0, 0, 1.0, 0],
     [0.74, 2.6, 4.4, 5.4, 0, 0.9, 0], [0.88, 0.8, 3.4, 7.4, 0, 1.0, 0], [1, 0, 2.8, 7.6, 0, 1.05, 0],
   ];
+  const LOGO_CAM = [0, 0.4, 1.35, 6.6, 0, 1.2, 0]; // cámara frontal para el logo
   const tgt = new THREE.Vector3();
 
   function resize() {
@@ -216,7 +318,7 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
   }
   const ro = new ResizeObserver(resize); ro.observe(stage); resize();
 
-  let target = 0, current = 0, visible = false, raf = 0, lastStage = -1;
+  let target = 0, current = 0, visible = false, raf = 0, lastStage = -1, tick = 0;
   const readScroll = () => { const r = track.getBoundingClientRect(); target = clamp(-r.top / (r.height - innerHeight)); };
   addEventListener("scroll", readScroll, { passive: true }); readScroll(); current = target;
   const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }); io.observe(stage);
@@ -227,13 +329,29 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
     if (!visible) return;
     const time = reduce ? 0 : clock.getElapsedTime();
     current += (target - current) * (reduce ? 1 : 0.085);
-    const p = current;
-    updateBlob(p, time); updatePad(p, time);
-    const c = sampleKeys(CK, p);
+    const P = current * TOTAL;
+
+    /* Tramo del logo: formar (0–0.38), sostener (0.38–0.62) y volver a la gota. */
+    let q, s = -1;
+    if (P < Q_LOGO) q = P;
+    else if (P < Q_LOGO + W) { q = Q_LOGO; s = (P - Q_LOGO) / W; }
+    else q = P - W;
+    const k = s < 0 ? 0 : s < 0.38 ? smooth(s / 0.38) : s < 0.62 ? 1 : 1 - smooth((s - 0.62) / 0.38);
+    const hold = k * k * k;
+    const camK = s < 0 ? 0 : smooth(clamp(s / 0.3)) * (1 - smooth(clamp((s - 0.7) / 0.3)));
+
+    updateBlob(q, time, smooth(clamp(k / 0.2)));
+    /* Durante la pausa del logo basta con deformar 30 veces por segundo;
+     * el render y la cámara siguen a 60 fps. */
+    tick++;
+    if (k < 0.999 || tick % 2 === 0) updateLogo(k, hold, time);
+    updatePad(q, time);
+    const c = sampleKeys(CK, q);
+    for (let i = 1; i < 7; i++) c[i] = lerp(c[i], LOGO_CAM[i], camK);
     camera.position.set(c[1], c[2], c[3]); tgt.set(c[4], c[5], c[6]); camera.lookAt(tgt);
-    let si = 0; for (let i = 0; i < FORGE_STAGES.length; i++) if (p >= FORGE_STAGES[i][0]) si = i;
+    let si = 0; for (let i = 0; i < FORGE_STAGES.length; i++) if (P >= FORGE_STAGES[i][0]) si = i;
     if (si !== lastStage) { lastStage = si; onStage(si); }
-    onProgress(p);
+    onProgress(current);
     renderer.render(scene, camera);
   };
   frame();
@@ -242,7 +360,7 @@ function createForge({ canvas, stage, track, onStage, onProgress }) {
     cancelAnimationFrame(raf); ro.disconnect(); io.disconnect();
     removeEventListener("scroll", readScroll);
     scene.traverse((o) => { if (o.geometry) o.geometry.dispose(); });
-    Object.values(M).forEach((m) => m.dispose()); liquid.dispose(); glowTex.dispose(); envTex.dispose(); pmrem.dispose();
+    Object.values(M).forEach((m) => m.dispose()); liquid.dispose(); logoMat.dispose(); glowTex.dispose(); envTex.dispose(); pmrem.dispose();
     renderer.dispose();
   };
 }
@@ -272,7 +390,7 @@ export function LiquidForge() {
 
   const [, title, desc] = FORGE_STAGES[stageIdx];
   return (
-    <section id="forja" ref={trackRef} className="relative" style={{ height: "640vh" }} aria-label="De una idea a tu primer juego">
+    <section id="forja" ref={trackRef} className="relative" style={{ height: "830vh" }} aria-label="De una idea a tu primer juego">
       <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(120%_90%_at_62%_45%,#0b1226_0%,#050507_60%)]">
         <canvas ref={canvasRef} aria-hidden className="absolute inset-0 h-full w-full" />
         {status !== "ready" && (
