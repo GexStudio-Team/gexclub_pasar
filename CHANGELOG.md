@@ -19,7 +19,7 @@ Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `
 | `npm run build` | Correcto, sin aviso de tamaño. Chunks: `three` 417,53 kB, `react` 141,67 kB, app 52,96 kB, `icons` 9,10 kB y CSS 31,11 kB. |
 | Build servido en `http://127.0.0.1:4173/` | Correcto. Secciones y canvas de “La forja” activos; sin errores en consola. |
 | Servidor de desarrollo en `http://127.0.0.1:5173/` | Correcto tras el reinicio provocado por el cambio de `vite.config.js`; sin errores en consola. |
-| Estado Git | 33 archivos en staging. Sin push: `gexclub_pasar/main` contiene un commit previo con historial no relacionado. |
+| Estado Git | Commit local `6d641b7` con 34 archivos y árbol limpio. Sin push: `gexclub_pasar/main` contiene un commit previo con historial no relacionado. |
 
 ### Deuda detectada
 

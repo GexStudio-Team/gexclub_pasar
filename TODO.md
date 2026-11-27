@@ -20,7 +20,7 @@ Estado de la web v2 de GexClub.
 - [x] Ignorar `public/` en el watcher de Vite para evitar `EBUSY`.
 - [x] Dividir el bundle JS en chunks `three`, `react`, `icons` y `index`.
 - [x] Verificar el build dividido en `http://127.0.0.1:4173/` sin errores de consola.
-- [x] Inicializar Git en `GexClub-v2` y configurar `origin` a `gexclub_pasar`.
+- [x] Inicializar Git en `GexClub-v2` y configurar `origin` a `gexclub_pasar` (commit local `6d641b7`).
 
 ## En progreso
 
