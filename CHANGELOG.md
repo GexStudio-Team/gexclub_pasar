@@ -2,6 +2,24 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
+## [Unreleased] — 2026-11-27 06:40 America/Bogota
+
+### Cursores en vivo para la revisión en OpenCode
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `feat` | Se agregó `src/cursorSync.js` y el plugin `gx-live-cursor-relay` en `vite.config.js` para sincronizar cursores entre pestañas mediante el WebSocket de HMR de Vite. | Permitir ver en el Review pane el cursor del agente moviéndose en tiempo real mientras construye la página. |
+| `feat` | Cada cliente dibuja también su propio cursor, con nombre, color y anillo al hacer clic; el contador del overlay muestra los cursores en pantalla. | Que la pestaña observada muestre el movimiento, no solo el cursor ajeno. |
+| `docs` | Se documentó el uso en `README.md`, `TODO.md` y `docs/Arquitectura.md`. | Mantener trazabilidad de una herramienta de desarrollo que no afecta al sitio publicado. |
+
+### Verificación
+
+| Prueba | Resultado |
+| --- | --- |
+| Dos pestañas (`?cursor=AGENTE` y `?cursor=INVITADO`) | Sincronización bidireccional: ambas muestran los dos cursores en las mismas coordenadas y el contador `CURSORES EN VIVO · 2`. |
+| Consola del navegador | Sin errores en ninguna de las dos pestañas. |
+| `npm run build` | Correcto, sin avisos. `Select-String` sobre `dist/assets/*.js` no encuentra `gx-cursor` ni `gx-live-cursors`: el relay no entra en producción. |
+
 ## [Unreleased] — 2026-11-27 01:23 America/Bogota
 
 ### Estrategia de publicación

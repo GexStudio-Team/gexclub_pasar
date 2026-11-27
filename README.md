@@ -43,6 +43,16 @@ npm run dev
 
 Abre `http://127.0.0.1:5173/`.
 
+### Cursores en vivo (solo desarrollo)
+
+El servidor de desarrollo incluye un relay de cursores sobre el WebSocket de HMR de Vite (`src/cursorSync.js`). No usa dependencias nuevas y **no se incluye en el build de producción**. Para verlo:
+
+1. Abre `http://127.0.0.1:5173/?cursor=AGENTE` en el navegador de OpenCode.
+2. Abre `http://127.0.0.1:5173/?cursor=INVITADO` en otro navegador o pestaña.
+3. Mueve el puntero: cada cliente dibuja su cursor y el de los demás, con el nombre y un anillo al hacer clic.
+
+Cualquier nombre en el parámetro `?cursor=` se muestra con color propio; `AGENTE` usa verde y `INVITADO` azul. Al recargar, los cursores vuelven a sincronizarse.
+
 ## Build de producción
 
 ```bash

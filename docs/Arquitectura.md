@@ -31,6 +31,7 @@ GexClub-v2/
 │   ├── App.jsx
 │   ├── data.js
 │   ├── hooks.js
+│   ├── cursorSync.js     # relay de cursores en vivo, solo desarrollo
 │   ├── index.css
 │   └── components/
 │       ├── Primitives.jsx
@@ -50,6 +51,8 @@ GexClub-v2/
 ├── gexclub-v2.html        # copia heredada
 └── onix-t1.html           # demo heredada
 ```
+
+`src/cursorSync.js` se carga con un `import()` dinámico dentro de `if (import.meta.env.DEV)` en `src/main.jsx`. El plugin `gx-live-cursor-relay` de `vite.config.js` reenvía los eventos `gx-cursor` entre clientes conectados al WebSocket de HMR. Rollup elimina esa rama en producción, por lo que `dist/` no contiene el relay.
 
 ## Componentes
 
