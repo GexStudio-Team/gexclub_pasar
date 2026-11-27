@@ -1,0 +1,477 @@
+<title>ÓNIX T1</title>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Estudio blanco infinito; un solo objeto negro brillante que muta con el scroll. */
+:root{
+  color-scheme: light;
+  --studio:#ecebe8; --studio-hi:#f8f7f5; --ink:#0b0b0c; --ink-2:#55555a; --ink-3:#9a9a9f;
+  --line:rgba(11,11,12,.12); --night:#0b0b0c; --night-ink:#f2f2f0;
+  --display:"Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--studio)}
+body{background:var(--studio);color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+
+/* Escenario fijo */
+#track{position:relative;height:720vh}
+#stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:radial-gradient(120% 90% at 60% 35%, var(--studio-hi) 0%, var(--studio) 55%, #dddcd8 100%)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* Navegación */
+.nav{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(18px + env(safe-area-inset-top,0px)) max(20px, env(safe-area-inset-right,0px)) 18px max(20px, env(safe-area-inset-left,0px))}
+.brand{font-weight:900;letter-spacing:.32em;font-size:15px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:13px;color:var(--ink-2)}
+.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font:600 13px/1 var(--display);padding:12px 18px;border:1px solid var(--ink);cursor:pointer;transition:background .25s,color .25s}
+.btn.dark{background:var(--ink);color:var(--studio-hi)}
+.btn.dark:hover{background:transparent;color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--studio-hi)}
+
+/* Titular */
+.hero{position:absolute;z-index:5;left:max(28px, 5vw);top:20vh;max-width:min(520px, 44vw);pointer-events:none}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--ink);display:inline-block}
+.hero h1{margin:18px 0 0;font-weight:900;text-transform:uppercase;letter-spacing:-.035em;line-height:.86;font-size:clamp(44px, 7.4vw, 112px);text-wrap:balance}
+.hero h1 span{display:block;opacity:0;transform:translateY(40%);filter:blur(10px);animation:rise 1s cubic-bezier(.2,.7,.1,1) forwards}
+.hero h1 span:nth-child(2){animation-delay:.12s}.hero h1 span:nth-child(3){animation-delay:.24s}
+.hero p{margin:22px 0 0;max-width:34ch;color:var(--ink-2);font-size:15px;line-height:1.55;opacity:0;animation:fade .9s .5s forwards}
+.hero .cta{margin-top:26px;display:flex;gap:10px;pointer-events:auto;opacity:0;animation:fade .9s .65s forwards}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+@keyframes fade{to{opacity:1}}
+
+/* Leyenda de fase */
+.caption{position:absolute;z-index:5;left:max(28px, 5vw);bottom:max(36px, 6vh);width:min(360px, 80vw)}
+.caption .row{display:flex;align-items:baseline;gap:14px;font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.caption .row b{color:var(--ink);font-weight:500}
+.caption h2{margin:12px 0 6px;font-size:26px;font-weight:800;letter-spacing:-.02em}
+.caption p{margin:0;color:var(--ink-2);font-size:14px;line-height:1.5;min-height:3em}
+.caption .swap{transition:opacity .35s, transform .35s}
+.caption .swap.out{opacity:0;transform:translateY(6px)}
+
+/* Progreso */
+.progress{position:absolute;z-index:5;right:max(24px, 3vw);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font:500 10px/1 var(--mono);color:var(--ink-3);letter-spacing:.15em}
+.progress .bar{width:1px;height:28vh;background:var(--line);position:relative;overflow:hidden}
+.progress .bar i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--ink);transform-origin:top;transform:scaleY(0)}
+.scrollhint{position:absolute;z-index:5;left:50%;bottom:28px;transform:translateX(-50%);font:500 10px/1 var(--mono);letter-spacing:.3em;color:var(--ink-3);text-transform:uppercase;transition:opacity .4s}
+
+.loading{position:absolute;inset:0;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:.3em;color:var(--ink-3);text-transform:uppercase;z-index:4;transition:opacity .6s}
+
+/* Bloque posterior */
+.specs{background:var(--night);color:var(--night-ink);padding-block:120px 80px;padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto}
+.specs h3{margin:16px 0 0;font-size:clamp(34px,5vw,64px);font-weight:900;letter-spacing:-.035em;line-height:.95;text-transform:uppercase;text-wrap:balance}
+.specs .eyebrow{color:#8b8b90}.specs .eyebrow i{background:var(--night-ink)}
+.grid{margin-top:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.12)}
+.grid div{padding:28px 20px 0 0;border-right:1px solid rgba(255,255,255,.08)}
+.grid div:last-child{border-right:0}
+.grid strong{display:block;font-size:clamp(34px,4vw,54px);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.grid span{display:block;margin-top:8px;font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#8b8b90}
+.note{margin-top:56px;font-size:13px;color:#8b8b90;max-width:60ch;line-height:1.6}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:96px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font:500 11px/1 var(--mono);letter-spacing:.14em;color:#6f6f74;text-transform:uppercase}
+
+@media (max-width: 860px){
+  .nav ul{display:none}
+  .hero{top:14vh;max-width:88vw}
+  .hero p{display:none}
+  .progress{display:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+  .grid div:nth-child(2){border-right:0}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero h1 span,.hero p,.hero .cta{animation:none;opacity:1;transform:none;filter:none}
+}
+</style>
+
+<nav class="nav" aria-label="Principal">
+  <a class="brand" href="#top">ÓNIX</a>
+  <ul>
+    <li><a href="#track">Modelo T1</a></li>
+    <li><a href="#specs">Ingeniería</a></li>
+    <li><a href="#specs">Concepto</a></li>
+  </ul>
+  <a class="btn dark" href="#specs">Ver ficha</a>
+</nav>
+
+<div id="top"></div>
+<section id="track" aria-label="Ensamblaje del ÓNIX T1">
+  <div id="stage">
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="loading" id="loading">Fundiendo material…</div>
+
+    <div class="hero">
+      <div class="eyebrow"><i></i>ÓNIX T1 · Todoterreno</div>
+      <h1><span>Llega</span><span>con</span><span>intención.</span></h1>
+      <p>Una todoterreno que nace de metal líquido. Haz scroll y mírala tomar forma, pieza por pieza.</p>
+      <div class="cta">
+        <button class="btn dark" id="go" type="button">Ver ensamblaje ↓</button>
+        <a class="btn ghost" href="#specs">Ficha técnica</a>
+      </div>
+    </div>
+
+    <div class="caption" aria-live="polite">
+      <div class="row"><b id="capN">01</b><span>/ 07</span><span id="capTag">Fase</span></div>
+      <div class="swap" id="capBody">
+        <h2 id="capT">Materia</h2>
+        <p id="capD">Todo empieza como un charco de metal líquido.</p>
+      </div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="pct">00</span><div class="bar"><i id="barFill"></i></div><span>100</span></div>
+    <div class="scrollhint" id="hint">Scroll</div>
+  </div>
+</section>
+
+<section class="specs" id="specs">
+  <div class="wrap">
+    <div class="eyebrow"><i></i>Ficha técnica · concepto</div>
+    <h3>Cuadrada por fuera.<br>Indestructible por dentro.</h3>
+    <div class="grid">
+      <div><strong>4×4</strong><span>Tracción total permanente</span></div>
+      <div><strong>3</strong><span>Bloqueos de diferencial</span></div>
+      <div><strong>240 mm</strong><span>Despeje al suelo</span></div>
+      <div><strong>700 mm</strong><span>Profundidad de vadeo</span></div>
+    </div>
+    <p class="note">ÓNIX y el modelo T1 son una marca y un vehículo ficticios creados para esta demostración de animación 3D controlada por scroll. El vehículo está modelado en tiempo real con Three.js; no hay imágenes ni video.</p>
+    <footer><span>ÓNIX · Concepto 2026</span><span>Three.js · WebGL</span></footer>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+<script>
+(() => {
+  const canvas = document.getElementById('gl');
+  const stage = document.getElementById('stage');
+  const track = document.getElementById('track');
+  if (!window.THREE) { document.getElementById('loading').textContent = 'No se pudo cargar WebGL'; return; }
+
+  /* ───────── utilidades ───────── */
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = t => t * t * (3 - 2 * t);
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const easeInOut = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  // Ruido Perlin 3D mejorado (compacto)
+  const perm = new Uint8Array(512);
+  (() => { const p = [...Array(256).keys()]; let s = 1337;
+    for (let i = 255; i > 0; i--) { s = (s * 16807) % 2147483647; const j = s % (i + 1); [p[i], p[j]] = [p[j], p[i]]; }
+    for (let i = 0; i < 512; i++) perm[i] = p[i & 255]; })();
+  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+  const grad = (h, x, y, z) => { h &= 15; const u = h < 8 ? x : y, v = h < 4 ? y : (h === 12 || h === 14 ? x : z); return ((h & 1) ? -u : u) + ((h & 2) ? -v : v); };
+  function noise(x, y, z) {
+    const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+    x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+    const u = fade(x), v = fade(y), w = fade(z);
+    const A = perm[X] + Y, AA = perm[A] + Z, AB = perm[A + 1] + Z, B = perm[X + 1] + Y, BA = perm[B] + Z, BB = perm[B + 1] + Z;
+    return lerp(lerp(lerp(grad(perm[AA], x, y, z), grad(perm[BA], x - 1, y, z), u),
+                     lerp(grad(perm[AB], x, y - 1, z), grad(perm[BB], x - 1, y - 1, z), u), v),
+                lerp(lerp(grad(perm[AA + 1], x, y, z - 1), grad(perm[BA + 1], x - 1, y, z - 1), u),
+                     lerp(grad(perm[AB + 1], x, y - 1, z - 1), grad(perm[BB + 1], x - 1, y - 1, z - 1), u), v), w);
+  }
+
+  /* ───────── renderer / escena ───────── */
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.92;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
+
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+
+  const key = new THREE.DirectionalLight(0xffffff, 1.6);
+  key.position.set(3, 9, 5); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5, near: 1, far: 25 });
+  key.shadow.radius = 6; key.shadow.bias = -0.0004;
+  scene.add(key);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d6d0, 0.35));
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.22 }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+
+  /* ───────── metal líquido ───────── */
+  const liquidMat = new THREE.MeshPhysicalMaterial({ color: 0x000000, metalness: 0.05, roughness: 0.06, clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 1.1 });
+  const blobGeo = new THREE.SphereGeometry(1, 200, 140);
+  const blob = new THREE.Mesh(blobGeo, liquidMat);
+  blob.castShadow = true; scene.add(blob);
+
+  const posAttr = blobGeo.attributes.position;
+  const VN = posAttr.count;
+  const base = new Float32Array(posAttr.array); // dirección unitaria por vértice
+  const spikeF = new Float32Array(VN), liftF = new Float32Array(VN);
+  (() => {
+    const N = 110, dirs = [], g = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) { const y = 1 - (i / (N - 1)) * 2 * 0.86 - 0.02, r = Math.sqrt(1 - y * y), t = g * i; dirs.push([Math.cos(t) * r, y, Math.sin(t) * r]); }
+    for (let i = 0; i < VN; i++) {
+      const x = base[i * 3], y = base[i * 3 + 1], z = base[i * 3 + 2];
+      let m = -1; for (const d of dirs) { const dt = x * d[0] + y * d[1] + z * d[2]; if (dt > m) m = dt; }
+      spikeF[i] = Math.pow(clamp((m - 0.983) / 0.017), 1.15) * (y > -0.55 ? 1 : 0.15);
+      liftF[i] = Math.pow(Math.max(0, y), 4);
+    }
+  })();
+
+  // Fotogramas clave del líquido: [p, sx, sy, sz, hover, ruido, lift, púas]
+  const BK = [
+    [0.00, 1.6, 0.07, 1.6, 0.00, 0.16, 0.0, 0.0],  // charco
+    [0.09, 1.6, 0.07, 1.6, 0.00, 0.16, 0.0, 0.0],
+    [0.22, 0.85, 0.95, 0.85, 0.00, 0.22, 1.1, 0.0],  // se levanta
+    [0.33, 1.00, 1.00, 1.00, 0.35, 0.00, 0.0, 0.0],  // esfera
+    [0.43, 1.00, 1.00, 1.00, 0.35, 0.00, 0.0, 0.0],
+    [0.51, 1.75, 0.20, 1.75, 0.10, 0.03, 0.0, 0.0],  // disco
+    [0.58, 1.05, 0.85, 1.05, 0.15, 0.05, 0.0, 0.85], // púas
+    [0.65, 1.05, 0.85, 1.05, 0.20, 0.05, 0.0, 1.00],
+    [0.74, 0.00, 0.00, 0.00, 0.50, 0.10, 0.0, 0.20], // se disuelve en la estructura
+    [1.00, 0.00, 0.00, 0.00, 0.50, 0.00, 0.0, 0.00],
+  ];
+  function sampleKeys(keys, p) {
+    let i = 0; while (i < keys.length - 2 && p > keys[i + 1][0]) i++;
+    const a = keys[i], b = keys[i + 1], t = easeInOut(clamp((p - a[0]) / (b[0] - a[0] || 1)));
+    return a.map((v, k) => lerp(v, b[k], t));
+  }
+
+  function updateBlob(p, time) {
+    const k = sampleKeys(BK, p);
+    const [, sx, sy, sz, hover, nAmp, lift, spike] = k;
+    const visible = sx > 0.01;
+    blob.visible = visible;
+    if (!visible) return;
+    blob.scale.set(sx, sy, sz);
+    blob.position.y = sy + hover + Math.sin(time * 1.4) * 0.04 * hover;
+    blob.rotation.y = time * 0.15 + p * 4;
+    const arr = posAttr.array, t = time * 0.55, puddle = sy < 0.3 ? 1 : 0;
+    const f = puddle ? 2.6 : 1.6;
+    for (let i = 0; i < VN; i++) {
+      const j = i * 3, x = base[j], y = base[j + 1], z = base[j + 2];
+      let r = 1;
+      if (nAmp > 0.001) r += nAmp * noise(x * f + t, y * f + t * 0.6, z * f - t * 0.8);
+      if (spike > 0.001) r += spike * spikeF[i] * (1.15 + 0.1 * Math.sin(time * 3 + i * 0.013));
+      let yy = y * r;
+      if (lift > 0.001) yy += lift * liftF[i] * (1.1 + 0.25 * noise(x * 2 + t, 3.1, z * 2));
+      arr[j] = x * r; arr[j + 1] = yy; arr[j + 2] = z * r;
+    }
+    posAttr.needsUpdate = true;
+    blobGeo.computeVertexNormals();
+  }
+
+  /* ───────── vehículo (modelado con primitivas) ───────── */
+  const M = {
+    paint: new THREE.MeshPhysicalMaterial({ color: 0x030303, metalness: 0.3, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 0.7 }),
+    trim: new THREE.MeshStandardMaterial({ color: 0x0c0c0d, metalness: 0.1, roughness: 0.7, envMapIntensity: 0.5 }),
+    chrome: new THREE.MeshStandardMaterial({ color: 0xe8e8e8, metalness: 1, roughness: 0.12 }),
+    frame: new THREE.MeshStandardMaterial({ color: 0x2b2b30, metalness: 0.75, roughness: 0.38 }),
+    tire: new THREE.MeshStandardMaterial({ color: 0x080808, metalness: 0, roughness: 0.95, envMapIntensity: 0.4 }),
+    rim: new THREE.MeshStandardMaterial({ color: 0x1b1b1e, metalness: 0.85, roughness: 0.25 }),
+    glass: new THREE.MeshPhysicalMaterial({ color: 0x050608, metalness: 0, roughness: 0.04, transparent: true, opacity: 0.72, clearcoat: 1 }),
+    seat: new THREE.MeshStandardMaterial({ color: 0xa3121a, roughness: 0.55 }),
+    lamp: new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4e0, emissiveIntensity: 0, roughness: 0.2 }),
+    tail: new THREE.MeshStandardMaterial({ color: 0x5a0a0d, emissive: 0xff1a1a, emissiveIntensity: 0, roughness: 0.3 }),
+  };
+
+  const car = new THREE.Group(); scene.add(car);
+  const parts = [];
+  const CENTER = new THREE.Vector3(0, 1.2, 0);
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  function part(geo, mat, pos, rot = [0, 0, 0], t0 = 0.66, dur = 0.08) {
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = true; mesh.receiveShadow = true;
+    const final = new THREE.Vector3(...pos), frot = new THREE.Euler(...rot);
+    const start = CENTER.clone().lerp(final, 0.12).add(new THREE.Vector3((rnd() - .5) * .4, (rnd() - .2) * .6, (rnd() - .5) * .4));
+    parts.push({ mesh, final, frot, start, spin: new THREE.Vector3((rnd() - .5) * 3, (rnd() - .5) * 3, (rnd() - .5) * 3), t0, t1: t0 + dur });
+    car.add(mesh); return mesh;
+  }
+  const RB = (w, h, d, r = 0.04, s = 3) => new THREE.RoundedBoxGeometry(w, h, d, s, r);
+  const BX = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+  const CY = (rt, rb, h, seg = 40) => new THREE.CylinderGeometry(rt, rb, h, seg);
+
+  // Fase 1 — chasis de largueros
+  for (const z of [-0.52, 0.52]) part(BX(4.0, 0.14, 0.12), M.frame, [0, 0.5, z], [0, 0, 0], 0.645, 0.07);
+  for (const x of [-1.75, -0.9, 0, 0.9, 1.75]) part(BX(0.1, 0.1, 1.04), M.frame, [x, 0.5, 0], [0, 0, 0], 0.655 + rnd() * 0.02, 0.06);
+  for (const x of [-1.42, 1.42]) part(CY(0.06, 0.06, 1.62, 16), M.frame, [x, 0.42, 0], [Math.PI / 2, 0, 0], 0.665, 0.06);
+  // diferenciales
+  for (const x of [-1.42, 1.42]) part(new THREE.SphereGeometry(0.15, 24, 16), M.frame, [x, 0.42, 0], [0, 0, 0], 0.67, 0.06);
+
+  // Fase 2 — ruedas
+  function wheel(x, z, t0) {
+    const side = Math.sign(z);
+    part(CY(0.43, 0.43, 0.32, 48), M.tire, [x, 0.43, z], [Math.PI / 2, 0, 0], t0, 0.07);
+    part(CY(0.27, 0.27, 0.33, 40), M.rim, [x, 0.43, z + side * 0.005], [Math.PI / 2, 0, 0], t0 + 0.006, 0.07);
+    part(CY(0.07, 0.07, 0.345, 20), M.chrome, [x, 0.43, z + side * 0.01], [Math.PI / 2, 0, 0], t0 + 0.012, 0.07);
+    for (let s = 0; s < 5; s++) {
+      const a = (s / 5) * Math.PI * 2;
+      part(BX(0.05, 0.2, 0.03), M.chrome, [x + Math.cos(a) * 0.15, 0.43 + Math.sin(a) * 0.15, z + side * 0.17], [0, 0, a + Math.PI / 2], t0 + 0.014, 0.07);
+    }
+  }
+  wheel(1.42, 0.86, 0.675); wheel(1.42, -0.86, 0.68); wheel(-1.42, 0.86, 0.685); wheel(-1.42, -0.86, 0.69);
+
+  // Fase 3 — motor e interior
+  part(RB(0.85, 0.48, 0.72, 0.05), M.frame, [1.5, 0.84, 0], [0, 0, 0], 0.69, 0.07);
+  for (const z of [-0.18, 0.18]) part(CY(0.08, 0.08, 0.7, 20), M.chrome, [1.5, 1.12, z], [0, 0, Math.PI / 2], 0.7, 0.06);
+  for (const [x, z] of [[0.25, 0.4], [0.25, -0.4], [-0.75, 0.4], [-0.75, -0.4]]) {
+    part(RB(0.5, 0.14, 0.5, 0.05), M.seat, [x, 1.02, z], [0, 0, 0], 0.7 + rnd() * 0.02, 0.06);
+    part(RB(0.12, 0.62, 0.5, 0.05), M.seat, [x - 0.25, 1.36, z], [0, 0, -0.12], 0.705 + rnd() * 0.02, 0.06);
+  }
+  part(CY(0.19, 0.19, 0.04, 32), M.trim, [0.62, 1.42, 0.4], [0, 0, 1.2], 0.72, 0.06); // volante
+
+  // Fase 4 — carrocería inferior
+  part(RB(4.3, 0.78, 1.86, 0.07), M.paint, [0, 1.0, 0], [0, 0, 0], 0.725, 0.08);
+  part(RB(1.3, 0.07, 1.78, 0.03), M.paint, [1.48, 1.41, 0], [0, 0, -0.025], 0.745, 0.07); // capó
+  for (const [x, z] of [[1.42, 0.98], [1.42, -0.98], [-1.42, 0.98], [-1.42, -0.98]])
+    part(RB(1.18, 0.16, 0.18, 0.05), M.trim, [x, 0.98, z], [0, 0, 0], 0.75 + rnd() * 0.02, 0.07); // pasos de rueda
+  part(RB(0.26, 0.28, 2.0, 0.05), M.trim, [2.22, 0.66, 0], [0, 0, 0], 0.755, 0.07); // parachoques delantero
+  part(RB(0.22, 0.26, 2.0, 0.05), M.trim, [-2.22, 0.66, 0], [0, 0, 0], 0.76, 0.07);
+  for (const z of [1.03, -1.03]) part(BX(2.0, 0.05, 0.2), M.trim, [-0.1, 0.6, z], [0, 0, 0], 0.765, 0.06); // estribos
+  // parrilla
+  part(RB(0.05, 0.5, 1.0, 0.02), M.trim, [2.165, 1.06, 0], [0, 0, 0], 0.77, 0.06);
+  for (const y of [0.92, 1.06, 1.2]) part(BX(0.03, 0.035, 0.92), M.chrome, [2.195, y, 0], [0, 0, 0], 0.775, 0.06);
+  // juntas de puertas
+  for (const z of [0.932, -0.932]) for (const x of [0.15, -0.9]) part(BX(0.012, 0.74, 0.01), M.trim, [x, 1.0, z], [0, 0, 0], 0.79, 0.05);
+
+  // Fase 5 — cabina
+  const roofY = 2.0;
+  part(RB(2.82, 0.1, 1.84, 0.04), M.paint, [-0.5, roofY, 0], [0, 0, 0], 0.775, 0.08);
+  for (const z of [0.88, -0.88]) for (const x of [0.88, -0.2, -0.95, -1.86])
+    part(BX(0.08, 0.62, 0.08), M.paint, [x, 1.69, z], [0, 0, 0], 0.785 + rnd() * 0.015, 0.06);
+  part(BX(0.08, 0.62, 0.08), M.paint, [-1.86, 1.69, 0], [0, 0, 0], 0.79, 0.06);
+  part(BX(2.82, 0.05, 1.84), M.paint, [-0.5, 1.39, 0], [0, 0, 0], 0.78, 0.06); // cintura
+
+  // Fase 6 — cristales, luces, espejos, rueda de repuesto
+  part(BX(0.03, 0.56, 1.68), M.glass, [0.9, 1.69, 0], [0, 0, 0], 0.81, 0.06);
+  for (const z of [0.89, -0.89]) part(BX(2.68, 0.54, 0.02), M.glass, [-0.5, 1.69, z], [0, 0, 0], 0.815, 0.06);
+  part(BX(0.02, 0.52, 1.6), M.glass, [-1.88, 1.69, 0], [0, 0, 0], 0.82, 0.06);
+  for (const z of [0.68, -0.68]) {
+    part(CY(0.135, 0.135, 0.06, 32), M.lamp, [2.17, 1.12, z], [0, 0, Math.PI / 2], 0.82, 0.06);
+    part(new THREE.TorusGeometry(0.15, 0.022, 12, 40), M.chrome, [2.19, 1.12, z], [0, Math.PI / 2, 0], 0.825, 0.06);
+    part(BX(0.04, 0.12, 0.2), M.tail, [-2.165, 1.18, z * 1.18], [0, 0, 0], 0.83, 0.06);
+    part(RB(0.18, 0.12, 0.08, 0.02), M.paint, [0.82, 1.52, z * 1.56], [0, 0, 0], 0.83, 0.06); // espejos
+  }
+  part(CY(0.4, 0.4, 0.24, 48), M.tire, [-2.33, 1.22, 0], [0, 0, Math.PI / 2], 0.835, 0.07);
+  part(CY(0.3, 0.3, 0.25, 40), M.paint, [-2.34, 1.22, 0], [0, 0, Math.PI / 2], 0.84, 0.06);
+  part(BX(1.6, 0.04, 0.05), M.trim, [-0.5, 2.08, 0.75], [0, 0, 0], 0.845, 0.05); // barras de techo
+  part(BX(1.6, 0.04, 0.05), M.trim, [-0.5, 2.08, -0.75], [0, 0, 0], 0.845, 0.05);
+
+  function updateCar(p, time) {
+    for (const o of parts) {
+      const k = clamp((p - o.t0) / (o.t1 - o.t0));
+      const m = o.mesh;
+      if (k <= 0) { m.visible = false; continue; }
+      m.visible = true;
+      const e = easeOut(k);
+      m.position.lerpVectors(o.start, o.final, e);
+      // arco hacia arriba mientras vuela
+      m.position.y += Math.sin(e * Math.PI) * 0.35;
+      m.rotation.set(o.frot.x + o.spin.x * (1 - e), o.frot.y + o.spin.y * (1 - e), o.frot.z + o.spin.z * (1 - e));
+      const s = 0.05 + 0.95 * easeOut(clamp(k * 1.4));
+      m.scale.setScalar(s);
+    }
+    const glow = smooth(clamp((p - 0.86) / 0.06));
+    M.lamp.emissiveIntensity = glow * 2.2;
+    M.tail.emissiveIntensity = glow * 1.4;
+    car.rotation.y = -0.18 + smooth(clamp((p - 0.86) / 0.14)) * 0.35;
+  }
+
+  /* ───────── cámara por fases ───────── */
+  // [p, camX, camY, camZ, targetX, targetY, targetZ]
+  const CK = [
+    [0.00, 0.0, 5.2, 8.8, 0, 0.2, 0],
+    [0.10, 0.6, 4.4, 8.4, 0, 0.3, 0],
+    [0.22, 3.4, 2.2, 6.6, 0, 1.0, 0],
+    [0.36, 0.4, 1.7, 6.4, 0, 1.3, 0],
+    [0.50, -2.0, 4.6, 6.2, 0, 0.5, 0],
+    [0.62, -4.2, 2.4, 6.0, 0, 1.0, 0],
+    [0.74, 5.2, 4.2, 9.0, 0, 1.1, 0],
+    [0.88, 8.0, 2.5, 9.4, 0, 1.0, 0],
+    [1.00, 7.2, 1.6, 9.9, 0, 0.95, 0],
+  ];
+  const tgt = new THREE.Vector3();
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.fov = w < 860 ? 42 : 30;
+    // En escritorio el objeto vive a la derecha del titular
+    if (w >= 860) camera.setViewOffset(w, h, -w * 0.15, 0, w, h); else camera.setViewOffset(w, h, 0, h * 0.06, w, h);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage); resize();
+
+  /* ───────── scroll + UI ───────── */
+  const STAGES = [
+    [0.00, 'Materia', 'Todo empieza como un charco de metal líquido.'],
+    [0.15, 'Impulso', 'El material se levanta y busca su forma.'],
+    [0.29, 'Equilibrio', 'Una esfera perfecta, sostenida solo por tensión superficial.'],
+    [0.46, 'Base', 'Se aplana hasta convertirse en plataforma.'],
+    [0.55, 'Carácter', 'Campo magnético al máximo: cada púa es un punto de anclaje.'],
+    [0.645, 'Estructura', 'Chasis de largueros, ejes rígidos y tracción total.'],
+    [0.86, 'ÓNIX T1', 'Ensamblada desde cero. Lista para cualquier terreno.'],
+  ];
+  const capN = document.getElementById('capN'), capT = document.getElementById('capT'), capD = document.getElementById('capD'), capBody = document.getElementById('capBody');
+  const barFill = document.getElementById('barFill'), pct = document.getElementById('pct'), hint = document.getElementById('hint');
+  let shown = 0, swapTimer = 0;
+  function setCaption(i) {
+    if (i === shown) return; shown = i;
+    capBody.classList.add('out'); clearTimeout(swapTimer);
+    swapTimer = setTimeout(() => { const s = STAGES[i]; capN.textContent = String(i + 1).padStart(2, '0'); capT.textContent = s[1]; capD.textContent = s[2]; capBody.classList.remove('out'); }, 220);
+  }
+
+  let target = 0, current = 0;
+  const readScroll = () => {
+    const r = track.getBoundingClientRect();
+    target = clamp(-r.top / (r.height - innerHeight));
+  };
+  addEventListener('scroll', readScroll, { passive: true }); readScroll(); current = target;
+  document.getElementById('go').addEventListener('click', () => {
+    const top = track.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top + (track.offsetHeight - innerHeight) * 0.24, behavior: 'smooth' });
+  });
+
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
+
+  const clock = new THREE.Clock();
+  let firstFrame = true;
+  function frame() {
+    requestAnimationFrame(frame);
+    if (!visible) return;
+    const time = clock.getElapsedTime();
+    current += (target - current) * 0.085;
+    if (Math.abs(target - current) < 0.0001) current = target;
+    const p = current;
+
+    updateBlob(p, time);
+    updateCar(p, time);
+
+    const c = sampleKeys(CK, p);
+    camera.position.set(c[1], c[2], c[3]);
+    tgt.set(c[4], c[5], c[6]);
+    camera.lookAt(tgt);
+
+    let si = 0; for (let i = 0; i < STAGES.length; i++) if (p >= STAGES[i][0]) si = i;
+    setCaption(si);
+    barFill.style.transform = `scaleY(${p})`;
+    pct.textContent = String(Math.round(p * 100)).padStart(2, '0');
+    hint.style.opacity = p > 0.02 ? 0 : 1;
+
+    renderer.render(scene, camera);
+    if (firstFrame) { firstFrame = false; const l = document.getElementById('loading'); l.style.opacity = 0; setTimeout(() => l.remove(), 700); }
+  }
+  frame();
+})();
+</script>

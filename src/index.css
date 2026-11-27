@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{ --accent:#2F7BFF; --lime:#B6FF3B; --bg:#050507; }
+html{ scroll-behavior:smooth; background:var(--bg); }
+body{ background:var(--bg); }
+.gx{ font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+.gx .mono{ font-family:'JetBrains Mono',ui-monospace,monospace; }
+.gx ::selection{ background:var(--accent); color:#fff; }
+
+@keyframes gxWord{ from{opacity:0; filter:blur(16px); transform:translateY(35%)} to{opacity:1; filter:blur(0); transform:none} }
+@keyframes gxFade{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+@keyframes gxSweep{ to{ transform:rotate(360deg) } }
+@keyframes gxPing{ 0%{transform:scale(.4); opacity:.8} 100%{transform:scale(1); opacity:0} }
+@keyframes gxBlink{ 0%,100%{opacity:1} 50%{opacity:.25} }
+@keyframes gxPixel{ 0%,100%{opacity:.06} 50%{opacity:.65} }
+@keyframes gxModal{ from{opacity:0; transform:translateY(24px) scale(.98)} to{opacity:1; transform:none} }
+
+.gx-word{ display:inline-block; opacity:0; animation:gxWord 1s cubic-bezier(.2,.7,.1,1) forwards; will-change:transform,filter,opacity; }
+.gx-fade{ opacity:0; animation:gxFade .9s cubic-bezier(.2,.7,.1,1) forwards; }
+
+.rv{ opacity:0; transform:translateY(28px); filter:blur(6px); transition:opacity .9s cubic-bezier(.2,.7,.1,1), transform .9s cubic-bezier(.2,.7,.1,1), filter .9s; }
+.rv.in{ opacity:1; transform:none; filter:none; }
+
+.spot{ position:relative; isolation:isolate; }
+.spot::before,.spot::after{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .35s; }
+.spot::before{ background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(47,123,255,.10), transparent 45%); z-index:-1; }
+.spot::after{ padding:1px; background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(47,123,255,.85), rgba(182,255,59,.25) 30%, transparent 60%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
+.spot:hover::before,.spot:hover::after{ opacity:1; }
+
+.radar-sweep{ background:conic-gradient(from 0deg, rgba(47,123,255,.45), rgba(47,123,255,0) 22%); animation:gxSweep 4.5s linear infinite; }
+.radar-ping{ animation:gxPing 3s cubic-bezier(.2,.6,.3,1) infinite; }
+.blink{ animation:gxBlink 1.6s ease-in-out infinite; }
+.gx-modal{ animation:gxModal .5s cubic-bezier(.2,.7,.1,1) both; }
+
+.giant{ font-weight:800; letter-spacing:-.06em; line-height:.8; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.09); }
+.giant.fill{ color:rgba(255,255,255,.025); -webkit-text-stroke:0; }
+
+@media (prefers-reduced-motion: reduce){
+  .gx-word,.gx-fade{ animation:none; opacity:1; }
+  .rv{ transition:none; opacity:1; transform:none; filter:none; }
+  .radar-sweep,.radar-ping,.blink{ animation:none; }
+}
