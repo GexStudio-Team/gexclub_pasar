@@ -2,6 +2,22 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
+## [Unreleased] — 2026-11-27 01:23 America/Bogota
+
+### Estrategia de publicación
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `feat` | La rama local de trabajo pasa a llamarse `v2` y la publicación se realiza en `origin/v2`. | Evitar un push non-fast-forward sobre `gexclub_pasar/main`, que contiene el historial del sitio v0.4.0. |
+| `docs` | Se actualizan `TODO.md` y `docs/Arquitectura.md` con la rama de publicación acordada. | Mantener trazabilidad entre la decisión, el repositorio local y GitHub. |
+
+### Verificación
+
+| Prueba | Resultado |
+| --- | --- |
+| Rama local | `v2`, con los commits `6d641b7` y `47e9d66` más el commit documental de esta entrada. |
+| Rama remota | `origin/v2` creada desde esta raíz. `origin/main` permanece en `67c1c33`. |
+
 ## [Unreleased] — 2026-11-27 01:20 America/Bogota
 
 ### División de chunks y versionado local

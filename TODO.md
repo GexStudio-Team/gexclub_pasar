@@ -54,8 +54,12 @@ El usuario confirmó que los datos reales aún no están listos. Los valores `TE
 
 ### Versionado y publicación
 
-- [ ] Definir la estrategia para publicar en `GexStudio-Team/gexclub_pasar`: el remoto `main` ya contiene un commit con `deploy/` y `codigo-completo/`, por lo que un push directo sería rechazado por historial no relacionado.
-- [ ] Ejecutar el push cuando se confirme la estrategia (rama nueva, fusión de historiales o repositorio separado).
+- [x] Definir la estrategia para publicar en `GexStudio-Team/gexclub_pasar`: se acordó una rama `v2` separada porque `main` contiene el historial del sitio v0.4.0.
+- [x] Publicar los commits en `origin/v2` sin modificar `origin/main`.
+
+### Pendiente de decisión futura
+
+- [ ] Si se requiere, unificar `v2` con `main` mediante PR o fusión controlada, conservando `deploy/` y `codigo-completo/`.
 
 ## Referencias
 
