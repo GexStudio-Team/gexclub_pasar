@@ -26,6 +26,7 @@ Estado de la web v2 de GexClub.
 - [x] Alinear la paleta con el PNG oficial: `#0078FF`, `#6018F0`, `#9DB8FF` y fondo `#01020A`; eliminar el verde lima de CSS, Tailwind, Canvas 2D y Three.js (ADR-004).
 - [x] Cargar datos reales del sitio v0.4.0 y Luma: fecha, horario, sede, formato, resumen y correo de contacto (ADR-004).
 - [x] Investigar `mattpocock/skills` y dejar el informe en `docs/Informe-skills-agentes.md` sin descargarlo ni instalarlo.
+- [x] Generar `PROMPT-OTRA-PC.md` y crear `origin/v2-entrega` desde `v2` con todo el trabajo actual.
 
 ## En progreso
 

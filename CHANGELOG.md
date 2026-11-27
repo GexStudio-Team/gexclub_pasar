@@ -2,6 +2,15 @@
 
 Registro de cambios de GexClub v2. Las marcas de tiempo están en zona horaria `America/Bogota`.
 
+## [Unreleased] — 2026-11-27 07:05 America/Bogota
+
+### Entrega para otra máquina
+
+| Tipo | Qué | Por qué |
+| --- | --- | --- |
+| `docs` | Se creó `PROMPT-OTRA-PC.md` con el estado actual, las reglas, los pendientes y los comandos para continuar en otra PC. | Permitir retomar el trabajo sin perder decisiones ni contexto. |
+| `release` | Se publicó `origin/v2` en el commit `2539c87` y se creó `origin/v2-entrega` apuntando al mismo estado. | Cumplir la entrega en una rama nueva sin modificar `main`. |
+
 ## [Unreleased] — 2026-11-27 02:50 America/Bogota
 
 ### Paleta alineada al logo y datos reales del sitio v0.4.0
